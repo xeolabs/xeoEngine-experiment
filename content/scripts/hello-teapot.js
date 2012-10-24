@@ -1,28 +1,37 @@
-/*
- * Reset Nexus
- */
 nexus.call({
     method:"reset"
 });
 
-/*
- * Create a scene
- *      - adds a 'scene' actor to nexus, which is defined in content/components/objects/scene.js
- *      - gives the actor a unique ID
- *      - the actor creates a SceneJS.Scene, giving it an ID and binding it to a canvas
+
+/* Create a scene
+ *
+ * This creates an actor object on the nexus which acts as a proxy for a SceneJS.Scene. Through the actor,
+ * we can start, stop, update, pick, destroy and subscribe to events on the underlying scene graph.
+ *
+ * Nexus creates the actor from an asynchronously loaded class prototype defined as an AMD module in
+ * content/components/objects/scene.js.
+ *
+ * Note that we dont have to wait until the actor has loaded though bedore we fire method calls at it
+ * because nexus will buffer the calls until the actor has loaded.
+ *
  */
-var scene = nexus.add({
-    type:"scene", // Select actor type defined in content/components/objects/scene.js
+nexus.call({
+
+    method:"add",
+
+    type:"scene", // Select actor type defined in
     id:"myScene",
 
     sceneId:"mySceneNode",
     canvasId:"theCanvas"
 });
 
-/* Create some nodes in the scene
+
+/* Set up a basic scene graph
  */
-scene.call({
-    method:"add",
+nexus.call({
+
+    method:"myScene.add",
 
     node:{
         type:"camera",
@@ -91,22 +100,28 @@ scene.call({
     }
 });
 
+
 /*
  * Set lookat position
  */
-scene.call({
-    method:"set",
+nexus.call({
+
+    method:"myScene.set",
+
     nodeId:"myLookat",
     eye:{
         z:-20
     }
 });
 
+
 /*
  * Add a teapot to the scene
  */
-scene.call({
-    method:"add",
+nexus.call({
+
+    method:"myScene.add",
+
     nodeId:"myMaterial",
     node:{
         type:"geometry",
@@ -117,11 +132,14 @@ scene.call({
     }
 });
 
+
 /*
- * Add a teapot to the scene
+ * Change teapot colour
  */
-scene.call({
-    method:"set",
+nexus.call({
+
+    method:"myScene.set",
+
     nodeId:"myMaterial",
     baseColor:{
         r:1,
@@ -131,83 +149,22 @@ scene.call({
 });
 
 
-scene.whenExists(
-    function () {
+/* Spin the teapot on each scene tick
+ */
+var teapotSpin = 0;
 
-        /* Create "camera"
-         */
-        var camera = nexus.add({
-            type:"camera",
-            id:"camera",
-            sceneId:"mySceneNode",
-            nodeId:"myLookat"
+nexus.subscribe(
+
+    "myScene.tick",
+
+    function (params) {
+
+        nexus.call({
+
+            method:"myScene.set",
+
+            nodeId:"myRotate",
+            angle:teapotSpin += 0.8
         });
-
-        /*------------------------------------------------------------------------
-         * Crude canvas pan control
-         *----------------------------------------------------------------------*/
-
-        var x = 20;
-        var y = 20;
-
-        var lastX;
-        var lastY;
-
-        var dragging = false;
-
-        /* Set initial camera state
-         */
-        camera.call({
-            method:"set",
-            eye:{ x:x, y:y, z:-40 },
-            look:{ y:0.0 },
-            up:{ y:1.0 }
-        });
-
-        var mouse = nexus.add({
-            type:"mouse",
-            id:"mouse",
-            sceneId:"mySceneNode"
-        });
-
-        /* Mouse handlers
-         */
-        nexus.subscribe(
-            "mouse.down",
-            function (params) {
-                dragging = true;
-            });
-
-        nexus.subscribe(
-            "mouse.move",
-            function (params) {
-
-                if (dragging && lastX != null) {
-
-                    x += params.canvasX - lastX;
-                    y += params.canvasY - lastY;
-
-                    if (y < 10) {
-                        y = 10;
-                    }
-
-                    camera.call({
-                        method:"set",
-                        eye:{
-                            x:x * 0.1,
-                            y:y * 0.1
-                        }
-                    });
-                }
-
-                lastX = params.canvasX;
-                lastY = params.canvasY;
-            });
-
-        nexus.subscribe(
-            "mouse.up",
-            function (params) {
-                dragging = false;
-                lastX = null;
-            });
     });
+
