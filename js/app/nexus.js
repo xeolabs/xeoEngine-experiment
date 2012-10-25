@@ -270,7 +270,7 @@ define(["./map"], // Map with automatic IDs
 
                     objects[objectId] = type;
 
-                    proxy._exists();
+                    proxy._resolve();
 
                     self.publish("task.finished", {
                         taskId:taskId
@@ -288,9 +288,9 @@ define(["./map"], // Map with automatic IDs
                         try {
                             object = new clazz(objectId, self, params);
 
-                            if (!object._destroy) { // Object destructor is mandatory
-                                throw "_destroy method missing on object type: " + type;
-                            }
+//                            if (!object._destroy) { // Object destructor is mandatory
+//                                throw "_destroy method missing on object type: " + type;
+//                            }
 
                         } catch (err) {
 
@@ -319,7 +319,7 @@ define(["./map"], // Map with automatic IDs
                             objectInfo.methods.push(methodName);
                         }
 
-                        proxy._exists();
+                        proxy._resolve();
 
                         self.publish("task.finished", {
                             taskId:taskId
@@ -361,7 +361,6 @@ define(["./map"], // Map with automatic IDs
             }
 
 
-
             /**
              * Proxy object which defers method calls on an object until it exists
              * @param objectId
@@ -369,7 +368,8 @@ define(["./map"], // Map with automatic IDs
              */
             function Proxy(objectId) {
                 this.objectId = objectId;
-                this._existsCallbacks = [];
+                this._resolvedCallbacks = [];
+                this._rejectedCallbacks = [];
             }
 
             Proxy.prototype.call = function (message) {
@@ -382,22 +382,47 @@ define(["./map"], // Map with automatic IDs
                 return self.remove(this.objectId);
             };
 
-            Proxy.prototype.whenExists = function (callback) {
+            Proxy.prototype.whenResolved = function (callback) {
                 if (objects[this.objectId]) {
                     callback(this);
                 } else {
-                    this._existsCallbacks.push(callback);
+                    this._resolvedCallbacks.push(callback);
                 }
             };
 
-            Proxy.prototype._exists = function () {
-                while (this._existsCallbacks.length > 0) {
-                    this._existsCallbacks.pop()(this);
+            Proxy.prototype.whenRejected = function (callback) {
+                if (objects[this.objectId]) {
+                    callback(this);
+                } else {
+                    this._rejectedCallbacks.push(callback);
                 }
-                objectExists(this.objectId);
             };
 
-            function objectExists(objectId) {
+            Proxy.prototype._resolve = function () {
+
+                self.publish(this.objectId + ".resolved", {
+                    objectId:this.objectId
+                });
+
+                while (this._resolvedCallbacks.length > 0) {
+                    this._resolvedCallbacks.pop()(this);
+                }
+
+                doDeferredCalls(this.objectId);
+            };
+
+            Proxy.prototype._reject = function() {
+
+                self.publish(this.objectId + ".rejected", {
+                    objectId:this.objectId
+                });
+
+                while (this._rejectedCallbacks.length > 0) {
+                    this._rejectedCallbacks.pop()(this);
+                }
+            };
+
+            function doDeferredCalls(objectId) {
 
                 var queues = messageQueues[objectId];
 

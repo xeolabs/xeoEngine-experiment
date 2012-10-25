@@ -1,37 +1,9 @@
-nexus.call({
-    method:"reset"
-});
 
-
-/* Create a scene
- *
- * This creates an actor object on the nexus which acts as a proxy for a SceneJS.Scene. Through the actor,
- * we can start, stop, update, pick, destroy and subscribe to events on the underlying scene graph.
- *
- * Nexus creates the actor from an asynchronously loaded class prototype defined as an AMD module in
- * content/components/objects/scene.js.
- *
- * Note that we dont have to wait until the actor has loaded though bedore we fire method calls at it
- * because nexus will buffer the calls until the actor has loaded.
- *
+/* Set up the default scene graph
  */
 nexus.call({
 
-    method:"add",
-
-    type:"scene", // Select actor type defined in
-    id:"myScene",
-
-    sceneId:"mySceneNode",
-    canvasId:"theCanvas"
-});
-
-
-/* Set up a basic scene graph
- */
-nexus.call({
-
-    method:"myScene.add",
+    method:"scene.add",
 
     node:{
         type:"camera",
@@ -105,9 +77,7 @@ nexus.call({
  * Set lookat position
  */
 nexus.call({
-
-    method:"myScene.set",
-
+    method:"scene.set",
     nodeId:"myLookat",
     eye:{
         z:-20
@@ -119,9 +89,7 @@ nexus.call({
  * Add a teapot to the scene
  */
 nexus.call({
-
-    method:"myScene.add",
-
+    method:"scene.add",
     nodeId:"myMaterial",
     node:{
         type:"geometry",
@@ -137,9 +105,7 @@ nexus.call({
  * Change teapot colour
  */
 nexus.call({
-
-    method:"myScene.set",
-
+    method:"scene.set",
     nodeId:"myMaterial",
     baseColor:{
         r:1,
@@ -154,15 +120,10 @@ nexus.call({
 var teapotSpin = 0;
 
 nexus.subscribe(
-
-    "myScene.tick",
-
+    "scene.tick",
     function (params) {
-
         nexus.call({
-
-            method:"myScene.set",
-
+            method:"scene.set",
             nodeId:"myRotate",
             angle:teapotSpin += 0.8
         });

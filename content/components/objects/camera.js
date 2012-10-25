@@ -8,10 +8,7 @@ define(function () {
      */
     return function (objectId, nexus, configs) {
 
-        var sceneId = configs.sceneId;
-        if (!sceneId) {
-            throw "param expected: sceneId";
-        }
+        var sceneId = configs.sceneId || "default";
 
         var nodeId = configs.nodeId;
         if (!nodeId) {

@@ -212,15 +212,29 @@ jQuery(document).ready(
 
                         updateAbout();
 
-                        if (script) { // Load boot script
+                        /* Create the default scene graph. Since we don't specify a 'sceneId'
+                         * we are creating the default scene. Other actors that refer to a
+                         * scene will refer to this scene when we omit that property on them.
+                         */
+                        nexus.add({
+                            type:"scene",
+                            id:"scene",
+                            canvasId:"theCanvas"
+                        })
 
-                            window.nexus = nexus; // Provide nexus to the script
+                            /* Load boot script when the scene is resolved in the nexus
+                             */
+                                .whenResolved(function () {
+                                    if (script) {
 
-                            require(["../../content/scripts/" + script],
-                                    function () {
-                                        // OK
-                                    });
-                        }
+                                        window.nexus = nexus; // Provide nexus to the script
+
+                                        require(["../../content/scripts/" + script],
+                                                function () {
+                                                    // OK
+                                                });
+                                    }
+                                });
                     });
 
         });
@@ -246,7 +260,7 @@ function initNexus(ok) {
 
     require([ // SceneJS core
 
-        'scenejs/scenejs.sphere',  // TODO: how to lazy-load these from RPC?
+        'scenejs/scenejs.sphere', // TODO: how to lazy-load these from RPC?
         'scenejs/scenejs.teapot',
         'scenejs/scenejs.box',
         'scenejs/scenejs.video'
@@ -366,13 +380,13 @@ function initTaskMonitor(nexus) {
 //                        task.element.fadeOut(2000,
 //                                function () {
 
-                                    setTimeout(
-                                            function () {
-                                                task.element.remove();
-                                            }, 2000);
+                        setTimeout(
+                                function () {
+                                    task.element.remove();
+                                }, 2000);
 
 
-                                //}, 2000);
+                        //}, 2000);
                     });
         }
     }

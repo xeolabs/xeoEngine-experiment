@@ -10,11 +10,7 @@ define(function () {
             throw "param expected: canvasId";
         }
 
-        var sceneId = configs.sceneId;
-
-        if (!sceneId) {
-            throw "param expected: sceneId";
-        }
+        var sceneId = configs.sceneId || "default";
 
         var startTime;
 
