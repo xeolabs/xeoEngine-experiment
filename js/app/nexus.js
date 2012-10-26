@@ -62,65 +62,38 @@ define(["./map"], // Map with automatic IDs
              * <p>Example - calling the nexus's {@link #createObject} method:</p>
              *
              * <pre>
-             * #call({
-             *      method: "createObject",
-             *      params: [
-             *          {
-             *              type: "myType",
-             *              objectId: "myObjectInstance",
-             *              someObjectConfig: "foo",
-             *              otherObjectConfig: "bar"
-             *          }
-             *      ]
+             * #call("add",{
+             *      type: "myType",
+             *      id: "myObjectInstance",
+             *      someObjectConfig: "foo",
+             *      otherObjectConfig: "bar"
              * });
              * </pre>
              *
              * <p>Example - calling the nexus's {@link #deleteObject} method:</p>
              *
              * <pre>
-             * #call({
-             *      method: "deleteObject",
-             *      params: [
-             *          {
-             *              objectId: "myObjectInstance"
-             *          }
-             *      ]
+             * #call("remove", {
+             *      id: "myObjectInstance"                               
              * });
              * </pre>
              *
              * <p>Example - calling a method on an object:</p>
              *
              * <pre>
-             * #call({
-             *      method: "myObjectInstance.someMethod",
-             *      params: [
-             *          {
+             * #call("myObjectInstance.someMethod", {
              *              someMethodParam: "foo",
-             *              otherMethodParam: "bar"
-             *          }
-             *      ]
+             *              otherMethodParam: "bar"                                    
              * });
              * </pre>
              *
-             * @param request The RPC request
-             * @param {String} request.method Method to call on nexus or object
-             * @param request.params Parameters
+             * @param {String} method Name of method on either the Nexus or one of its objects
+             * @param {JSON} params Params for target method 
              * @param {Function} ok Success callback
              * @param {Function} error Success callback
              */
-            this.call = function (request, ok, error) {
-
-                ok = ok || noop;
-                error = error || noop;
-
-                var method = request.method;
-
-                if (!method) {
-                    throw "param expected: method";
-                }
-
-                var params = request;
-
+            this.call = function (method, params, ok, error) {
+                
                 /* Manually route calls to nexus methods
                  */
                 switch (method) {
@@ -149,23 +122,19 @@ define(["./map"], // Map with automatic IDs
                 var tokens = method.split(".");
 
                 var objectId = tokens[0];
-                var methodName = tokens[1];
+                var method = tokens[1];
 
                 var object = objects[objectId];
 
                 if (object) {
 
-                    var fn = object[methodName];
+                    var fn = object[method];
 
                     if (!fn) {
-                        throw "method not found: " + methodName;
-                    }
+                        throw "method not found: " + method;
+                    }                    
 
-                    delete params.method;
-
-                    fn.call(object, params, ok, error);
-
-                    params.method = method;
+                    fn.call(object, params);
 
                 } else {
 
@@ -179,9 +148,7 @@ define(["./map"], // Map with automatic IDs
 
                     /* Defer message for when object exists
                      */
-                    (queues[methodName] || (queues[methodName] = [])).unshift(request);
-
-                    ok();
+                    (queues[method] || (queues[method] = [])).unshift(params);
                 }
 
                 return this;
@@ -372,9 +339,9 @@ define(["./map"], // Map with automatic IDs
                 this._rejectedCallbacks = [];
             }
 
-            Proxy.prototype.call = function (message) {
-                message.method = this.objectId + "." + message.method;
-                self.call(message);
+            Proxy.prototype.call = function (method, params) {
+                method = this.objectId + "." + method;
+                self.call(method, params);
                 return this;
             };
 
@@ -428,24 +395,23 @@ define(["./map"], // Map with automatic IDs
 
                 if (queues) {
 
-                    var message;
+                    var params;
                     var object = objects[objectId];
                     var queue;
                     var fn;
 
-                    for (var methodName in queues) {
-                        if (queues.hasOwnProperty(methodName)) {
+                    for (var method in queues) {
+                        if (queues.hasOwnProperty(method)) {
 
-                            queue = queues[methodName];
+                            queue = queues[method];
 
-                            fn = object[methodName];
+                            fn = object[method];
 
                             if (fn) {
 
                                 while (queue.length > 0) {
-                                    message = queue.pop();
-                                    delete message.method;
-                                    fn.call(object, message, noop, noop);
+                                    params = queue.pop();
+                                    fn.call(object, params, noop, noop);
                                 }
                             } else {
                                 queue.length = 0;

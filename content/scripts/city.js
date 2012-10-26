@@ -3,9 +3,7 @@
 
 var scene = nexus.get("scene");
 
-scene.call({
-    method:"add",
-
+scene.call("add", {
     node:{
         type:"camera",
         optics:{
@@ -77,8 +75,8 @@ var city = nexus.add({
     type:"city",
     id:"myCity",
 
-    posX: -180,
-    posZ: 0,
+    posX:-180,
+    posZ:0,
     numBuildingsX:6,
     numBuildingsZ:8,
     sizeX:300,
@@ -95,8 +93,8 @@ var city2 = nexus.add({
     type:"city",
     id:"myCity2",
 
-    posX: 180,
-    posZ: 0,
+    posX:180,
+    posZ:0,
     numBuildingsX:6,
     numBuildingsZ:8,
     sizeX:300,
@@ -109,8 +107,7 @@ var city2 = nexus.add({
 
 /* Add a big grey slab for the ground
  */
-scene.call({
-    method:"add",
+scene.call("add", {
     nodeId:"addStuffHere",
     node:{
         type:"translate",
@@ -160,8 +157,7 @@ var dragging = false;
 /*
  * Set initial lookat position
  */
-scene.call({
-    method:"set",
+scene.call("set", {
     nodeId:"myLookat",
     eye:{
         z:-350
@@ -194,8 +190,7 @@ nexus.subscribe(
                 y = 10;
             }
 
-            scene.call({
-                method:"set",
+            scene.call("set", {
                 nodeId:"myLookat",
                 eye:{
                     x:x,
