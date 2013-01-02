@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>ActorJS + SceneJS - Example #2</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <script src="libs/require.js"></script>
+
+    <script src="libs/scenejs.js"></script>
+
+    <script src="js/lib/stats.min.js"></script>
+
+    <script src="../docs/lib/jquery/jquery-lib.1.7.1.min.js"></script>
+
+
+    <link href="http://fonts.googleapis.com/css?family=Raleway:100" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
+    <link rel="stylesheet"
+          href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|Droid+Sans+Mono&v2">
+
+    <link href="../docs/css/styles.css" rel="stylesheet"/>
+
+</head>
+<body>
+
+<div id="container">
+    <h1>ActorJS + SceneJS</h1>
+
+    <p><a href="../docs/intro.html">&lt;&lt;&nbsp;Back to ActorJS Intro</a></p>
+
+    <h2>Actors in Web Workers</h2>
+
+    <p>ActorJS actors live in <i>spaces</i>, which can be created in their own Web Workers.</p>
+
+
+    <p> In this demo I'm running multiple physics systems concurrently. Each physics system is an actor (wrapping
+        a JigLibJS instance) residing in the default space of a ActorJS engine running in its own Web Worker. Each of
+        those
+        spaces are connected via JSON-RPC with the mothership ActorJS, which runs in the main thread and contains actors
+        which
+        manage a SceneJS scene graph.</p>
+
+
+    <div style="width: 100%; height:620px; text-align:center; padding-top: 40px; padding-bottom: 30px;">
+        <div style="float: left; text-align: left; width:15%;height: 100%;">
+            <div class="configs">
+                <ul>
+                    <li>
+                        <p class="section">Systems:</p>
+                        <input type="radio" name="numSystems" checked value="1">1</input><br>
+                        <input type="radio" name="numSystems" value="2">2</input><br>
+                        <input type="radio" name="numSystems" value="4">4</input><br>
+                        <input type="radio" name="numSystems" value="8">8</input><br>
+
+                        <p class="section">Workers:</p>
+                        <input type="radio" name="useWorkers" checked value="yes">Yes</input><br>
+                        <input type="radio" name="useWorkers" value="no">No</input><br>
+                    </li>
+                </ul>
+                <br>
+
+                <div style="padding-left: 10px; padding-top: 20px;">
+                    <a class="button" id="runAgain">Run again</a>
+                </div>
+            </div>
+        </div>
+        <div style="float: right; width:85%; height: auto; text-align:right;">
+            <canvas id="canvas1" width="760px" height="600px"
+                    style="display:inline;  width: 760px;  height: 600px;"></canvas>
+        </div>
+    </div>
+
+    <p>The performance improvement over running them in a single thread is profound. Even though there is some overhead
+        due to all the RPC, I found that when I configured the spaces to <i>not</i> run in workers, my
+        system could barely manage a frame per second.</p>
+
+    <h2>Usage</h2>
+
+    <p>To create a space on a Worker, just add a <code>newThread</code> flag parameter. Then any actors in
+        that space will run on the Worker.</p>
+        <pre>
+
+    space.call("addSpace", {
+        spaceId: "myWorkerSpace",
+        newThread: true
+    });
+
+    space.call("myWorkerSpace/addActor", {
+        type:"demos/myActor",
+        actorId:"foo",
+        someParam: "bar"
+    });
+</pre>
+
+    <p>The space will be subject to all the restrictions imposed on Web Workers,
+        such as having no access to the DOM. Therefore, with respect to SceneJS, Worker spaces are really intended to
+        contain actors performing computation, such as physics and collisions.</p>
+
+</div>
+
+<script>
+
+    jQuery(document).ready(
+
+            function ($) {
+
+                addPrettify();
+
+                jQuery(document).ready(
+
+                        function ($) {
+
+                            requirejs.config({
+
+                                //By default load any module IDs from js/lib
+                                baseUrl:"js/lib",
+
+                                //except, if the module ID starts with "app", load it from the js/app directory
+                                paths:{
+                                    app:"../app"
+                                }
+                            });
+
+
+                            require([
+                                'app/ActorJS'
+                            ],
+                                    function (ActorJS) {
+
+                                        var ActorJS = new ActorJS({
+                                            actorClassPath:"../../content/actors/"
+                                        });
+
+                                        var space = ActorJS.getSpace();
+
+                                        var numSystems = 1;
+                                        var useWorkers = true;
+
+
+                                        start({ numSystems:1, useWorkers:useWorkers });
+
+
+                                        $("input:radio[name=numSystems]").click(function () {
+                                            numSystems = parseInt($(this).val());
+                                        });
+
+                                        $("input:radio[name=useWorkers]").click(function () {
+                                            useWorkers = $(this).val() == "yes";
+                                        });
+
+                                        $("#runAgain").click(
+                                                function () {
+                                                    start({ numSystems:numSystems, useWorkers:useWorkers });
+                                                });
+
+                                        var stats = new Stats();
+
+                                        stats.setMode(0); // 0: fps, 1: ms
+
+                                        // Align top-left
+                                        stats.domElement.style.position = 'absolute';
+                                        stats.domElement.style.left = '0px';
+                                        stats.domElement.style.top = '0px';
+
+                                        document.body.appendChild(stats.domElement);
+
+
+                                        function start(params) {
+
+                                            space.call("removeActor", { // Does nothing if no such actor
+                                                actorId:"demo"
+                                            });
+
+                                            space.call("addActor", {
+                                                type:"demos/physics/physicsDemo",
+                                                actorId:"demo",
+                                                canvasId:"canvas1",
+                                                numSystems:params.numSystems,
+                                                numBalls:20,
+                                                useWorkers:params.useWorkers
+                                            });
+
+                                            space.subscribe("scene.tick",
+                                                    function () {
+                                                        stats.begin();
+                                                        stats.end();
+                                                    });
+                                        }
+
+                                    });
+                        });
+
+                function addPrettify() {
+                    var els = document.querySelectorAll('pre');
+                    for (var i = 0, el; el = els[i]; i++) {
+                        if (!el.classList.contains('noprettyprint')) {
+                            el.classList.add('prettyprint');
+                        }
+                    }
+
+                    var el = document.createElement('script');
+                    el.type = 'text/javascript';
+                    el.src = 'js/lib/prettify.js';
+                    el.onload = function () {
+                        prettyPrint();
+                    };
+
+                    document.body.appendChild(el);
+                }
+
+            });
+
+</script>
+
+<a href="https://github.com/xeolabs/scenejs-ActorJS" target="_blank"><img
+        style="position: absolute; top: 0; right: 0; border: 0;"
+        src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"
+        alt="Fork me on GitHub"></a>
+
+</body>
+</html>
