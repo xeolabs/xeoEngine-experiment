@@ -1,5 +1,14 @@
 /**
- * Mesh loaded from WaveFront .OBJ format
+
+    Mesh loaded from WaveFront .OBJ format
+
+
+    XXX.call("addActor", {
+        type:"import/wavefront",
+        actorId:"trex",
+        src:"content/models/wavefront/trex/dtrex.obj",
+        nodeId:"putModelHere"
+    });
  */
 define([
     "../../libs/obj-loader"
