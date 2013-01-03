@@ -19,15 +19,17 @@ var ActorJSClient = function (cfg) {
         throw "element is not an iframe: '" + iframe + "'";
     }
 
-    var handleMap = new HumanAPI._Map(); // Subscription handle pool
+    var subHandles = new HumanAPI._Map(); // Subscription handle pool
 
     var pubs = {}; // Publications
     var subs = {}; // Subscribers
 
     var ready = false; // True once server signals ready
+
     var callBuf = []; // Buffers outbound calls while ready != true
 
     var connectInterval;
+
 
     var self = this;
 
@@ -87,35 +89,71 @@ var ActorJSClient = function (cfg) {
         }
     }
 
-    this.call = function (method, params) {
-        var call = { method:method, params:params };
-        if (this._ready) {
-            sendCall(call);
+    function sendCall(call) {
+        if (ready) {
+            iframe.contentWindow.postMessage(JSON.stringify(call), "*");
         } else {
             callBuf.unshift(call); // Buffer if not ready
         }
-    };
-
-    function sendCall(call) {
-        iframe.contentWindow.postMessage(JSON.stringify(call), "*");
     }
 
+    this.call = function (method, params) {
+        sendCall({
+            method:method,
+            params:params
+        });
+    };
+
+
     this.publish = function (topic, pub) {
-        var sub = subs[topic];
-        if (sub) { // Notify subscription            
-            sub.call(this, pub);
-        }
+
+
     };
 
     this.subscribe = function (topic, callback) {
-        subs[topic] = callback;
+
+        var handle = subHandles.addItem({
+            topic:topic
+        });
+
+        sendCall({
+            method:"subscribe",
+            topic:topic,
+            handle:handle
+        });
+
+        var topicSubs = subs[topic];
+
+        if (!topicSubs) {
+
+            topicSubs = {           // Subscriptions for this event topic
+                handlers:{}, // Handler function for each subscriber
+                numSubs:0                      // Count of subscribers for the event topic
+            };
+
+            subs[topic] = topicSubs;
+        }
+
+        topicSubs.handlers[handle] = callback;
+
+        topicSubs.numSubs++;
+
         var pub = pubs[topic];
+
         if (pub) {
             callback(pub);
         }
+
+        return handle;
     };
 
     this.unsubscribe = function (handle) {
+
+        sendCall({
+            action:"unsubscribe",
+            handle:handle
+        });
+
         delete subs[handle];
         handleMap.removeItem(handle);
     }

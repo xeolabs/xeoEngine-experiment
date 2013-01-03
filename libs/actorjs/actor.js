@@ -588,26 +588,6 @@ define([
                     }
                 }
             }
-
-            /* Notify wildcard subscriptions
-             */
-
-            subs = this._topicSubs["*"];
-
-            if (subs) {
-
-                if (subs.numSubs > 0) {             // Don't handle if no subscribers
-
-                    var handlers = subs.handlers;
-
-                    for (var handle in handlers) {
-                        if (handlers.hasOwnProperty(handle)) {
-
-                            handlers[handle](params, topic);
-                        }
-                    }
-                }
-            }
         };
 
         /**
