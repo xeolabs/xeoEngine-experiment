@@ -1,5 +1,5 @@
 /**
- * Client for connection with remote Human using cross-window messaging
+ * Client for connection with remote ActorJS using cross-window messaging
  * @param cfg
  * @constructor
  */
