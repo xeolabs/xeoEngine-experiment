@@ -19,7 +19,7 @@ var ActorJSClient = function (cfg) {
         throw "element is not an iframe: '" + iframe + "'";
     }
 
-    var subHandles = new HumanAPI._Map(); // Subscription handle pool
+    var subHandles = new Map(); // Subscription handle pool
 
     var subs = {}; // Subscribers
 
