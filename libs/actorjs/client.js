@@ -21,17 +21,14 @@ var ActorJSClient = function (cfg) {
 
     var subHandles = new HumanAPI._Map(); // Subscription handle pool
 
-    var pubs = {}; // Publications
     var subs = {}; // Subscribers
 
-    var ready = false; // True once server signals ready
+    var connected = false;
 
-    var callBuf = []; // Buffers outbound calls while ready != true
+    var callBuf = []; // Buffers outbound calls while not connected
 
     var connectInterval;
 
-
-    var self = this;
 
     window.addEventListener('message',
         function (event) {
@@ -42,26 +39,27 @@ var ActorJSClient = function (cfg) {
 
             switch (data.message) {
 
-                case "ready":
-
-                    ready = true;
+                case "connected":
 
                     clearInterval(connectInterval);
+
+                    connected = true;
 
                     sendBufferedCalls();
 
                     break;
 
-                case "pubs":
+                case "published":
 
-                    var pubs = data.pubs;
+                    var topicSubs = subs[data.topic];
 
-                    for (var key in pubs) { // For each publication
-                        if (pubs.hasOwnProperty(key)) {
+                    if (topicSubs) {
 
-                            if (subs[key]) { // Subscription exists to this publication
-                                self.publish(key, pubs[key]); // Publish the packet
-                            }
+                        var handle = data.handle;
+
+                        var handler = topicSubs.handlers[handle];
+                        if (handler) {
+                            handler(data.pub);
                         }
                     }
 
@@ -76,11 +74,11 @@ var ActorJSClient = function (cfg) {
             }
         }, false);
 
-    /* Periodically request connection with Server
-     */
-    connectInterval = setInterval(function () {
-        iframe.contentWindow.postMessage("connect", "*");
-    }, 500);
+
+    connectInterval = setInterval(// Periodically request connection with Server
+        function () {
+            iframe.contentWindow.postMessage(JSON.stringify({ action:"connect" }), "*");
+        }, 500);
 
 
     function sendBufferedCalls() {
@@ -90,36 +88,33 @@ var ActorJSClient = function (cfg) {
     }
 
     function sendCall(call) {
-        if (ready) {
+        if (connected) {
             iframe.contentWindow.postMessage(JSON.stringify(call), "*");
         } else {
-            callBuf.unshift(call); // Buffer if not ready
+            callBuf.unshift(call); // Buffer if not connected
         }
     }
 
     this.call = function (method, params) {
         sendCall({
+            action:"call",
             method:method,
             params:params
         });
     };
 
-
-    this.publish = function (topic, pub) {
-
-
+    this.publish = function (topic, params) {
+        sendCall({
+            action:"publish",
+            topic:topic,
+            params:params
+        });
     };
 
     this.subscribe = function (topic, callback) {
 
         var handle = subHandles.addItem({
             topic:topic
-        });
-
-        sendCall({
-            method:"subscribe",
-            topic:topic,
-            handle:handle
         });
 
         var topicSubs = subs[topic];
@@ -136,13 +131,11 @@ var ActorJSClient = function (cfg) {
 
         topicSubs.handlers[handle] = callback;
 
-        topicSubs.numSubs++;
-
-        var pub = pubs[topic];
-
-        if (pub) {
-            callback(pub);
-        }
+        sendCall({
+            action:"subscribe",
+            topic:topic,
+            handle:handle
+        });
 
         return handle;
     };

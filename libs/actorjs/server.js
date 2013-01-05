@@ -1,13 +1,24 @@
+/*
+
+
+
+ */
 require([
     'libs/actorjs/actorjs.js'
 ],
-    function () {        
+    function () {
 
-        var client;                 
+        var client;
         var clientOrigin;
+
         var sendBuf = [];
         var handleMap = {};
-        
+
+        /* Tell ActorJS where to find actor types
+         */
+        ActorJS.configure({
+            actorClassPath:"actors/"
+        });
 
         if (window.addEventListener) {
 
@@ -22,7 +33,7 @@ require([
 
                             case "connect" :
 
-                                send({ status:"connected" });                                                                
+                                send({ status:"connected" });
 
                                 client = event.source;
                                 clientOrigin = event.origin;
@@ -31,7 +42,13 @@ require([
 
                             case "call":
 
-                                ActorJS[call.method].call(self, call.params);
+                                ActorJS.call(call.method, call.params);
+
+                                break;
+
+                            case "publish":
+
+                                ActorJS.publish(call.topic, call.params);
 
                                 break;
 
@@ -40,7 +57,7 @@ require([
                                 handleMap[call.handle] = ActorJS.subscribe(
                                     call.topic,
                                     function (pub) {
-                                        send({ pub:pub, handle:call.handle });
+                                        send({ published:pub, topic:call.topic, handle:call.handle });
                                     });
 
                                 break;
@@ -52,6 +69,8 @@ require([
                                 delete handleMap[call.handle];
 
                                 break;
+
+
                         }
                     }
 
