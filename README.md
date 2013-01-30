@@ -3,7 +3,9 @@ SceneJS-Nexus
 
 SceneJS Nexus is an insanely modular 3D engine built on [ActorJS](http://actorjs.org) and [SceneJS](http://scenejs.org).
 
-Via JSON-RPC calls, it lets us plug together a world from actor components, which we then call methods on
+## Concept
+
+Via JSON-RPC calls, Nexus lets us plug together a world from actor components, which we then call methods on
 to make them do stuff.
 
 JSON-RPC is very sweet for controlling 3D worlds. It lets us do things like distribute them across networks, drive them
@@ -77,17 +79,9 @@ require([
 
 ```
 
-Coolnesses to note here:
- * We're instantiating actor types that are defined in AMD modules
- * We call methods on those instances asynchronously, some of which are built in to ActorJS, like 'addActor'
- * We can subscribe to publications that the actors make
- * Calls and subscriptions can be made immediately (i.e. asynchronously) because ActorJS buffers those until the actor exists.
-
-Major plug-and-play going on here - all doable across a network.
-
-## Documentation and Examples
-Take a look at the [wiki](https://github.com/xeolabs/actorjs/wiki) for documentation and examples.
+## Documentation
+Take a look at the [wiki](https://github.com/xeolabs/scenejs-nexus/wiki) for documentation and examples.
 
 ## License
-ActorJS is licensed under both the [GPL](https://github.com/xeolabs/actorjs/blob/master/licenses/GPL_LICENSE.txt)
-and [MIT](https://github.com/xeolabs/actorjs/blob/master/licenses/MIT_LICENSE.txt) licenses. Pick whichever of those fits your needs.
+SceneJS Nexus is licensed under both the [GPL](https://github.com/xeolabs/scenejs-nexus/blob/master/licenses/GPL_LICENSE.txt)
+and [MIT](https://github.com/xeolabs/scenejs-nexus/blob/master/licenses/MIT_LICENSE.txt) licenses. Pick whichever of those fits your needs.
