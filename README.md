@@ -5,14 +5,16 @@ xeoEngine is an insanely modular WebGL-based 3D engine built on [ActorJS](http:/
 
 ## Concept
 
-Via JSON-RPC calls, xeoEngine lets us plug actors together to create a 3D worlds, then fire calls at the actors to make the worlds
- do stuff. xeoEngine dynamically loads actors from libraries of [RequireJS](http://requirejs.org) AMD modules. The aim is to have an extensive library of
- those actors, from which we select the ones we need for each application we build on xeoEngine.
+Via JSON-RPC calls, xeoEngine lets us plug actors together to create 3D worlds, then fire calls at the actors to make the worlds
+ do stuff.
+
+xeoEngine dynamically loads actors from libraries of [RequireJS](http://requirejs.org) AMD modules, and the aim is to have an extensive library of
+ those actors from which we select as required for each application we build on xeoEngine.
 
 JSON-RPC is very sweet for controlling 3D engines. It lets us do things like distribute them across networks, drive them
 with scripts written in other languages and so on.
 
-Take a look at the following snippet, which creates a world containing a Newell Teapot and a camera that we can move around:
+Take a look at the following snippet, which creates a world containing a Newell Teapot and a moveable camera:
 
 ```javascript
 
