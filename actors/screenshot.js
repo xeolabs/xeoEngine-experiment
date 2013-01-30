@@ -1,24 +1,17 @@
 /**
- * Physics system
+ * Canvas snapshot actor
  */
 define([
     "libs/canvas2image"
 ],
-
     function () {
 
-        /**
-         * @constructor
-         */
         return function (configs) {
-
 
             var scene = this.getObject("scene");
 
-
             /**
-             * Grab and publish a screenshot
-             * @param params
+             * Publishes a screenshot
              */
             this.get = function (params) {
 

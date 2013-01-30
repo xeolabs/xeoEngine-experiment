@@ -3,9 +3,9 @@
  */
 define([
 //    "css/jquery.terminal.css",
-    "libs/jquery.mousewheel-min.js",
-    "libs/jquery.terminal-min.js",
-    "libs/jquery.bpopup-0.7.0.min.js"
+    "libs/jquery/jquery.mousewheel-min.js",
+    "libs/jquery/jquery.terminal-min.js",
+    "libs/jquery/jquery.bpopup-0.7.0.min.js"
 ],
     function () {
 

@@ -1,5 +1,5 @@
 define([
-    "../../../libs/jquery-lib.1.7.1.min",
+    "../../../libs/jquery/jquery-lib.1.7.1.min.js",
     "../../../libs/html2canvas"
 ],
 

@@ -1,12 +1,12 @@
 /**
- * Canvas mouse manager
+ * Mouse management actor
+ *
+ * - Expects a scene graph resource
+ * - Catches mouse events on the scene graph's canvas and publishes them
  */
 define(function () {
 
-    /**
-     * @constructor
-     */
-    return function (configs) {
+    return function (cfg) {
 
         var scene = this.getObject("scene");
 
@@ -19,21 +19,6 @@ define(function () {
         canvas.addEventListener('click', click, true);
         canvas.addEventListener('dblclick', dblClick, true);
         canvas.addEventListener('selectstart', selectStart, false);
-
-
-        /**
-         * Destroys this object
-         */
-        this._destroy = function () {
-
-            canvas.removeEventListener('mousedown', mouseDown, true);
-            canvas.removeEventListener('mousemove', mouseMove, true);
-            canvas.removeEventListener('mouseup', mouseUp, true);
-            canvas.removeEventListener('mousewheel', mouseWheel, true);
-            canvas.removeEventListener('click', click, true);
-            canvas.removeEventListener('dblclick', dblClick, true);
-            canvas.removeEventListener('selectstart', selectStart, false);
-        };
 
         var lastClickX;
         var lastClickY;
@@ -72,30 +57,21 @@ define(function () {
         }
 
         function mouseWheel(event) {
-
             var delta = 0;
-
             if (!event) {
                 event = window.event;
             }
-
             if (event.wheelDelta) {
-
                 delta = event.wheelDelta / 120;
-
                 if (window.opera) {
                     delta = -delta;
                 }
-
             } else if (event.detail) {
                 delta = -event.detail / 3;
             }
-
             if (event.preventDefault)
                 event.preventDefault();
-
             event.returnValue = false;
-
             self.publish("mousewheel", { delta:delta });
         }
 
@@ -110,16 +86,6 @@ define(function () {
         }
 
         function click(event) {
-
-//            if (lastClickX != undefined) {
-//                if (event.clientX != lastClickX || event.clientY != lastClickY) {
-//                    return;
-//                }
-//            }
-//
-//            lastClickX = event.clientX;
-//            lastClickY = event.clientY;
-
             event = getClickCoordsWithinElement(event);
             self.publish("click", { canvasX:event.clientX, canvasY:event.clientY });
         }
@@ -152,6 +118,16 @@ define(function () {
             }
             return coords;
         }
+
+        this._destroy = function () {
+            canvas.removeEventListener('mousedown', mouseDown, true);
+            canvas.removeEventListener('mousemove', mouseMove, true);
+            canvas.removeEventListener('mouseup', mouseUp, true);
+            canvas.removeEventListener('mousewheel', mouseWheel, true);
+            canvas.removeEventListener('click', click, true);
+            canvas.removeEventListener('dblclick', dblClick, true);
+            canvas.removeEventListener('selectstart', selectStart, false);
+        };
     };
 });
 

@@ -1,4 +1,4 @@
-define(["../../../libs/scenejs.vectorText.js"],
+define(["../../../libs/scenejs/scenejs.vectorText.js"],
 
     function () {
 

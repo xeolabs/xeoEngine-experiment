@@ -1,7 +1,7 @@
 /**
  * Procedurally-generated city
  */
-define(["../../../libs/scenejs.box.js"],
+define(["../../../libs/scenejs/scenejs.box.js"],
 
     function () {
 

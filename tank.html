@@ -8,9 +8,9 @@
 
     <script src="libs/require.js"></script>
 
-    <script src="libs/scenejs.js"></script>
+    <script src="libs/scenejs/scenejs.js"></script>
 
-    <script src="libs/jquery-lib.1.7.1.min.js"></script>
+    <script src="libs/jquery/jquery-lib.1.7.1.min.js"></script>
 
 
     <link href="http://fonts.googleapis.com/css?family=Raleway:100" rel="stylesheet" type="text/css">
@@ -47,23 +47,24 @@
                 /* Configure RequireJS
                  */
                 requirejs.config({
-                    baseUrl:"."        //By default load any module IDs from ../js
+                    baseUrl:"."
                 });
 
-                /* Load ActorJS
+                /* Create an ActorJS instance to manage our world
+                 * http://actorjs.org
                  */
                 require([
                     'libs/actorjs/actorjs.js'
                 ],
-                        function () {
+                        function (world) {
 
-                            /* Tell ActorJS where to find actor types
+                            /* Tell world where to find our actor types
                              */
                             ActorJS.configure({
                                 actorClassPath:"actors/"
                             });
 
-                            /* Add scene
+                            /* Add scene actor
                              */
                             ActorJS.call("addActor", {
                                 type:"scene",
@@ -71,7 +72,7 @@
                                 canvasId:"theCanvas"
                             });
 
-                            /* Tank
+                            /* Add tank actor to scene
                              */
                             ActorJS.call("scene/addActor", {
                                 type:"objects/vehicles/tank",
@@ -86,21 +87,21 @@
 //            tankActorId:"tank"
 //        });
 
-                            /* Ground
+                            /* Add ground actor to scene
                              */
                             ActorJS.call("scene/addActor", {
                                 type:"objects/ground/grid2"
                             });
 
-                            /* Navigation - orbit about origin using mouse drags, control distance with wheel
+                            /* Add navigation actor to scene - orbit about origin using mouse drags, control distance with wheel
                              */
                             ActorJS.call("scene/addActor", {
                                 type:"navigation/eulerOrbit",
                                 radius:100,
-                                pitch: -2,
-                                yaw: -5,
-                                minPitch: -80,
-                                maxPitch: -2
+                                pitch:-2,
+                                yaw:-5,
+                                minPitch:-80,
+                                maxPitch:-2
                             });
                         });
             });

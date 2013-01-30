@@ -1,5 +1,5 @@
 define([
-    "../.././scenejs.box.js"
+    "../.././scenejs/scenejs.box.js"
 ],
     function () {
 

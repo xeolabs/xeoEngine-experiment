@@ -1,5 +1,11 @@
+/* Scene graph management actor
+ *
+ * - Provides a SceneJS scene graph for child actors
+ * - Provides method to pick on the scene graph, which publishes "pickhit" or "pickmiss" events
+ *
+ */
 define([
-    "libs/scenejs.js"
+    "libs/scenejs/scenejs.js"
 ],
     function () {
 
@@ -12,7 +18,6 @@ define([
 
             /* Create scene graph
              */
-
             var scene = SceneJS.createScene({
                 id:cfg.canvasId,
                 canvasId:cfg.canvasId
@@ -54,10 +59,8 @@ define([
              * @param params.canvasX
              * @param params.canvasY
              * @param params.rayPick
-             * @param ok
-             * @param error
              */
-            this.pick = function (params, ok, error) {
+            this.pick = function (params) {
 
                 var canvasX = params.canvasX;
                 var canvasY = params.canvasY;

@@ -2,7 +2,7 @@
  * Teapot which can be shown, hidden, spun and have its colour changed
  */
 define([
-    "../../../libs/scenejs.teapot.js"
+    "../../../libs/scenejs/scenejs.teapot.js"
 ],
 
     function () {

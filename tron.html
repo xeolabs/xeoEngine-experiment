@@ -8,15 +8,9 @@
 
     <script src="libs/require.js"></script>
 
-    <script src="libs/scenejs.js"></script>
+    <script src="libs/scenejs/scenejs.js"></script>
 
-    <script src="libs/jquery-lib.1.7.1.min.js"></script>
-
-
-    <link href="http://fonts.googleapis.com/css?family=Raleway:100" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
-    <link rel="stylesheet"
-          href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|Droid+Sans+Mono&v2">
+    <script src="libs/jquery/jquery-lib.1.7.1.min.js"></script>
 
     <style>
         body {
@@ -51,29 +45,48 @@
                     baseUrl:"."        //By default load any module IDs from ../js
                 });
 
+                /* Create an ActorJS instance to manage our world
+                 * http://actorjs.org
+                 */
                 require([
                     'libs/actorjs/actorjs.js'
                 ],
-                        function () {
+                        function (world) {
 
-                            /* Tell ActorJS where to find actor types
+                            /* Tell world where to find our actor types
                              */
-                            ActorJS.configure({
+                            world.configure({
                                 actorClassPath:"actors/"
                             });
 
-                            /* Scene
+                            /* Add scene actor
                              */
-                            ActorJS.call("addActor", {
+                            world.call("addActor", {
                                 type:"scene",
                                 actorId:"scene",
                                 canvasId:"theCanvas"
                             });
 
-
-                            /* Tron tank
+                            /* Add city
                              */
-                            ActorJS.call("scene/addActor", {
+                            world.call("scene/addActor", {
+                                type:"objects/buildings/city",
+
+                                xPos:0,
+                                zPos:0,
+
+                                xBuildings:6,
+                                zBuildings:8,
+
+                                xWidth:600,
+                                zWidth:600,
+
+                                streetWidth:20
+                            });
+
+                            /* Add tank
+                             */
+                            world.call("scene/addActor", {
                                 type:"objects/vehicles/tank",
                                 actorId:"tank"
                             });
@@ -88,100 +101,84 @@
 //                });
 
 
-                            ActorJS.call("addActor", {
-                                type:"scene/camera/flight",
-                                actorId:"cameraFlight",
-                                cameraActorId:"camera"
-                            });
+//                            ActorJS.call("addActor", {
+//                                type:"scene/camera/flight",
+//                                actorId:"cameraFlight",
+//                                cameraActorId:"camera"
+//                            });
+//
+//                            /* Camera tracking of tank position and direction
+//                             */
+//                            ActorJS.call("addActor", {
+//                                type:"objects/vehicles/tank/cameraTracking",
+//                                actorId:"cameraTracking",
+//                                tankActorId:"tank",
+//                                cameraActorId:"camera",
+//                                trackLook:true,
+//                                trackEye:false
+//                            });
 
-                            /* Camera tracking of tank position and direction
-                             */
-                            ActorJS.call("addActor", {
-                                type:"objects/vehicles/tank/cameraTracking",
-                                actorId:"cameraTracking",
-                                tankActorId:"tank",
-                                cameraActorId:"camera",
-                                trackLook:true,
-                                trackEye:false
-                            });
+//                            ActorJS.call("camera.setEye", { x:100, y:60, z:-100 });
+//
+//                            /* Ground
+//                             */
+//                            ActorJS.call("addActor", {
+//                                type:"objects/ground/grid2"
+//                            });
+//
+//                            ActorJS.call("pilot.setPos", { x:0, y:0, z:900 });
 
-                            ActorJS.call("camera.setEye", { x:100, y:60, z:-100 });
+//                            ActorJS.call("addActor", {
+//                                type:"utils/schedule",
+//                                calls:[
+//                                    {
+//                                        time:1,
+//                                        method:"pilot.setSpeed",
+//                                        params:{
+//                                            speed:1.5
+//                                        }
+//                                    },
+//                                    {
+//                                        time:5,
+//                                        method:"pilot.turn",
+//                                        params:{
+//                                            speed:0.1
+//                                        }
+//                                    },
+//                                    {
+//                                        time:10,
+//                                        method:"cameraTracking.trackEye",
+//                                        params:{
+//                                            enabled:true
+//                                        }
+//                                    },
+//
+//                                    {
+//                                        time:5,
+//                                        method:"pilot.turnGun",
+//                                        params:{
+//                                            speed:-0.1
+//                                        }
+//                                    },
+//                                    {
+//                                        time:10,
+//                                        method:"pilot.turn",
+//                                        params:{
+//                                            speed:-.5
+//                                        }
+//                                    },
+//                                    {
+//                                        time:20,
+//                                        method:"cameraTracking.trackEye",
+//                                        params:{
+//                                            enabled:false
+//                                        }
+//                                    },
+//
+//                                ]
+//                            });
 
-                            /* Ground
-                             */
-                            ActorJS.call("addActor", {
-                                type:"objects/ground/grid2"
-                            });
 
-                            ActorJS.call("pilot.setPos", { x:0, y:0, z:900 });
-
-                            ActorJS.call("addActor", {
-                                type:"utils/schedule",
-                                calls:[
-                                    {
-                                        time:1,
-                                        method:"pilot.setSpeed",
-                                        params:{
-                                            speed:1.5
-                                        }
-                                    },
-                                    {
-                                        time:5,
-                                        method:"pilot.turn",
-                                        params:{
-                                            speed:0.1
-                                        }
-                                    },
-                                    {
-                                        time:10,
-                                        method:"cameraTracking.trackEye",
-                                        params:{
-                                            enabled:true
-                                        }
-                                    },
-
-                                    {
-                                        time:5,
-                                        method:"pilot.turnGun",
-                                        params:{
-                                            speed:-0.1
-                                        }
-                                    },
-                                    {
-                                        time:10,
-                                        method:"pilot.turn",
-                                        params:{
-                                            speed:-.5
-                                        }
-                                    },
-                                    {
-                                        time:20,
-                                        method:"cameraTracking.trackEye",
-                                        params:{
-                                            enabled:false
-                                        }
-                                    },
-
-                                ]
-                            });
-
-                            /* Add building
-                             */
-                            ActorJS.call("addActor", {
-                                type:"objects/buildings/city",
-                                actorId:"myCity",
-
-                                xPos:0,
-                                zPos:0,
-
-                                xBuildings:6,
-                                zBuildings:8,
-
-                                xWidth:600,
-                                zWidth:600,
-
-                                streetWidth:20
-                            });
                         });
             });
 
