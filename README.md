@@ -86,9 +86,9 @@ To get the gist of Nexus, take a look at
 * [The Nexus Wiki](https://github.com/xeolabs/scenejs-nexus/wiki)
 
 ## Examples
-[Teapot](http://xeolabs.github.com/scenejs-nexus/teapot.html) - A Newell Teapot resting on a grid ground plane
-[City](http://xeolabs.github.com/scenejs-nexus/city.html) - A procedurally-generated city
-[City Flight](http://xeolabs.github.com/scenejs-nexus/cityFlight.html) - Flight simulation over a procedurally-generated city
+* [Teapot](http://xeolabs.github.com/scenejs-nexus/teapot.html) - A Newell Teapot resting on a grid ground plane
+* [City](http://xeolabs.github.com/scenejs-nexus/city.html) - A procedurally-generated city
+* [City Flight](http://xeolabs.github.com/scenejs-nexus/cityFlight.html) - Flight simulation over a procedurally-generated city
 
 ## License
 SceneJS Nexus is licensed under both the [GPL](https://github.com/xeolabs/scenejs-nexus/blob/master/licenses/GPL_LICENSE.txt)
