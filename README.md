@@ -76,7 +76,7 @@ require([
         });
 
     });
-
+ 
 ```
 
 ## Documentation
