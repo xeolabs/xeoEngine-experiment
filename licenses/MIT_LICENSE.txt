@@ -1,4 +1,4 @@
-// === SceneJS Nexus ===
+// === XEOEngine ===
 // 3D WebGL-based engine on SceneJS and ActorJS
 // Copyright (c) 2013 Lindsay Kay
 //

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
-    <title>ActorJS + SceneJS - Example #2</title>
+    <title>XEOEngine Demo: Tank</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -50,17 +50,17 @@
                     baseUrl:"."
                 });
 
-                /* Create an ActorJS instance to manage our world
+                /* Create an ActorJS instance to manage our engine
                  * http://actorjs.org
                  */
                 require([
                     'libs/actorjs/actorjs.js'
                 ],
-                        function (world) {
+                        function (engine) {
 
-                            /* Tell world where to find our actor types
+                            /* Tell engine where to find our actor types
                              */
-                            ActorJS.configure({
+                            engine.configure({
                                 actorClassPath:"actors/"
                             });
 

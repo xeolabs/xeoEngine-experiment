@@ -36,10 +36,10 @@ define([
 
                     var settings = {
                         prompt:'ready> ',
-                        name:'SceneJS Nexus',
+                        name:'XEOEngine',
                         height:"100%",
                         enabled:false,
-                        greetings:'SceneJS Nexus Terminal\n' +
+                        greetings:'XEOEngine Terminal\n' +
                             'https://github.com/xeolabs/scenejs-nexus/wiki/Nexus-Terminal\n\n'
                     };
 

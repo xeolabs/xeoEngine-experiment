@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
-    <title>City Flight</title>
+    <title>XEOEngine Demo: City Flight</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -44,23 +44,23 @@
                     baseUrl:"."
                 });
 
-                /* Create an ActorJS instance to manage our world
+                /* Create an ActorJS instance to manage our engine
                  * http://actorjs.org
                  */
                 require([
                     'libs/actorjs/actorjs.js'
                 ],
-                        function (world) {
+                        function (engine) {
 
-                            /* Tell world where to find our actor types
+                            /* Tell engine where to find our actor types
                              */
-                            world.configure({
+                            engine.configure({
                                 actorClassPath:"actors/"
                             });
 
                             /* Add scene
                              */
-                            world.call("addActor", {
+                            engine.call("addActor", {
                                 type:"scene",
                                 actorId:"scene",
                                 canvasId:"theCanvas"
@@ -68,7 +68,7 @@
 
                             /* City
                              */
-                            world.call("scene/addActor", {
+                            engine.call("scene/addActor", {
                                 type:"objects/buildings/city",
 
                                 xPos:0,
@@ -85,13 +85,13 @@
 
                             /* Ground
                              */
-                            world.call("scene/addActor", {
+                            engine.call("scene/addActor", {
                                 type:"objects/ground/grid2"
                             });
 
                             /* Navigation
                              */
-                            world.call("scene/addActor", {
+                            engine.call("scene/addActor", {
                                 type:"navigation/airplane",
 
                                 eye:{

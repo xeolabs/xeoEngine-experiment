@@ -45,23 +45,23 @@
                     baseUrl:"."        //By default load any module IDs from ../js
                 });
 
-                /* Create an ActorJS instance to manage our world
+                /* Create an ActorJS instance to manage our engine
                  * http://actorjs.org
                  */
                 require([
                     'libs/actorjs/actorjs.js'
                 ],
-                        function (world) {
+                        function (engine) {
 
-                            /* Tell world where to find our actor types
+                            /* Tell engine where to find our actor types
                              */
-                            world.configure({
+                            engine.configure({
                                 actorClassPath:"actors/"
                             });
 
                             /* Add scene actor
                              */
-                            world.call("addActor", {
+                            engine.call("addActor", {
                                 type:"scene",
                                 actorId:"scene",
                                 canvasId:"theCanvas"
@@ -69,7 +69,7 @@
 
                             /* Add city
                              */
-                            world.call("scene/addActor", {
+                            engine.call("scene/addActor", {
                                 type:"objects/buildings/city",
 
                                 xPos:0,
@@ -86,7 +86,7 @@
 
                             /* Add tank
                              */
-                            world.call("scene/addActor", {
+                            engine.call("scene/addActor", {
                                 type:"objects/vehicles/tank",
                                 actorId:"tank"
                             });
