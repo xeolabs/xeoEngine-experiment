@@ -1,12 +1,7 @@
 
 (function () {
 
-    /**
-     * Client for connection with remote ActorJS using cross-window messaging
-     * @param cfg
-     * @constructor
-     */
-    window.ActorJSWebMessageClient = function (cfg) {
+    window.xeoEngine = function (cfg) {
 
         if (!cfg.iframe) {
             throw "config expected: iframe";

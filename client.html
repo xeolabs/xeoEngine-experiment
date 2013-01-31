@@ -1,30 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
-    <title>xeoEngine Demo: IFRAME</title>
+    <title>xeoEngine Demo: Newell Teapot</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
+    <style>
+        body {
+            background-color: #000000;
+            margin: 0;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%; /*position: fixed;*/
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
 </head>
 <body>
 
-<h1>Embedded xeoEngine</h1>
+<iframe id="myIFrame" src="server.html"></iframe>
 
-<p>In this example we're embedding a xeoEngine in an iframe and using the Web Messaging API to fire JSON-RPC calls at
-    it to create the scene you see here.</p>
-
-<iframe id="myIFrame" style="width:800px; height:600px;" src="server.html"></iframe>
-
-<script src="libs/actorjs/client.js"></script>
+<script src="client.js"></script>
 
 <script>
 
-    /* Create a local proxy for the xeoEngine in the iframe.
-     * https://github.com/xeolabs/actorjs
+    /* Create client for the xeoEngine server in the iframe
      */
-
-    var engine = new ActorJSWebMessageClient({
+    var engine = new xeoEngine({
         iframe:"myIFrame"
     });
 
