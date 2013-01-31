@@ -17,12 +17,12 @@ loads one little JavaScript file for the xeoEngine client through which we fire 
 
 [Try it out on jsFiddle](http://jsfiddle.net/TzFhT/)
 
-First, our page needs an iframe containing the xeoEngine server:
+First, our page needs an iframe containing the xeoEngine [server](https://github.com/xeolabs/xeoEngine/blob/master/server.html):
 ```html
 <iframe id="myIFrame" style="width:800px; height:600px;"
 src="http://xeolabs.github.com/xeoEngine/server.html"></iframe>
 ```
-and the script tag to load the xeoEngine client class:
+and the script tag to load the xeoEngine [client class](https://github.com/xeolabs/xeoEngine/blob/master/client.js):
 ```html
 <script src="http://xeolabs.github.com/xeoEngine/client.js"></script>
 ```
