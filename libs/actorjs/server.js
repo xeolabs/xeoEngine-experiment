@@ -1,12 +1,9 @@
 /*
-
-
-
  */
 require([
     'libs/actorjs/actorjs.js'
 ],
-    function () {
+    function (actorjs) {
 
         var client;
         var clientOrigin;
@@ -16,7 +13,7 @@ require([
 
         /* Tell ActorJS where to find actor types
          */
-        ActorJS.configure({
+        actorjs.configure({
             actorClassPath:"actors/"
         });
 
@@ -33,7 +30,7 @@ require([
 
                             case "connect" :
 
-                                send({ status:"connected" });
+                                send({ message:"connected" });
 
                                 client = event.source;
                                 clientOrigin = event.origin;
@@ -42,35 +39,33 @@ require([
 
                             case "call":
 
-                                ActorJS.call(call.method, call.params);
+                                actorjs.call(call.method, call.params);
 
                                 break;
 
                             case "publish":
 
-                                ActorJS.publish(call.topic, call.params);
+                                actorjs.publish(call.topic, call.params);
 
                                 break;
 
                             case "subscribe":
 
-                                handleMap[call.handle] = ActorJS.subscribe(
+                                handleMap[call.handle] = actorjs.subscribe(
                                     call.topic,
                                     function (pub) {
-                                        send({ published:pub, topic:call.topic, handle:call.handle });
+                                        send({ message:"published", topic:call.topic, published:pub, handle:call.handle });
                                     });
 
                                 break;
 
                             case "unsubscribe":
 
-                                ActorJS.unsubscribe(handleMap[call.handle]);
+                                actorjs.unsubscribe(handleMap[call.handle]);
 
                                 delete handleMap[call.handle];
 
                                 break;
-
-
                         }
                     }
 

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>xeoEngine Demo: IFRAME</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+</head>
+<body>
+
+<h1>Embedded xeoEngine</h1>
+
+<p>In this example we're embedding a xeoEngine in an iframe and using the Web Messaging API to fire JSON-RPC calls at
+    it to create the scene you see here.</p>
+
+<iframe id="myIFrame" style="width:800px; height:600px;" src="server.html"></iframe>
+
+<script src="libs/actorjs/client.js"></script>
+
+<script>
+
+    /* Create a local proxy for the xeoEngine in the iframe.
+     * https://github.com/xeolabs/actorjs
+     */
+
+    var engine = new ActorJSWebMessageClient({
+        iframe:"myIFrame"
+    });
+
+    /* Add scene actor
+     */
+    engine.call("addActor", {
+        type:"scene",
+        actorId:"scene"
+    });
+
+    /* Add teapot actor to scene
+     */
+    engine.call("scene/addActor", {
+        type:"objects/prims/teapot",
+        yPos:2
+    });
+
+    /* Add ground actor to scene
+     */
+    engine.call("scene/addActor", {
+        type:"objects/ground/grid2"
+    });
+
+    /* Add navigation actor to scene
+     */
+    engine.call("scene/addActor", {
+        type:"navigation/eulerOrbit",
+        radius:20,
+        pitch:-2,
+        yaw:-5,
+        minPitch:-80,
+        maxPitch:-2
+    });
+
+</script>
+
+<a href="https://github.com/xeolabs/xeoengine" target="_blank"><img
+        style="position: absolute; top: 0; right: 0; border: 0;"
+        src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"
+        alt="Fork me on GitHub"></a>
+
+</body>
+</html>

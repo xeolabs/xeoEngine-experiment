@@ -11,16 +11,28 @@ define([
 
         return function (cfg) {
 
+            var canvasId = cfg.canvasId;
 
-            if (!cfg.canvasId) {
-                throw "param expected: canvasId";
+            var newdiv;
+
+            if (!canvasId) {
+
+                /* Create canvas at 100% size
+                 */
+                canvasId = "bla";
+                var body = document.getElementsByTagName("body")[0];
+                var newdiv = document.createElement('div');
+                newdiv.style.height = "100%";
+                newdiv.style.width = "100%"
+                newdiv.innerHTML = '<canvas id="' + canvasId + '" style="width: 100%; height: 100%; margin: 0; padding: 0;"></canvas>';
+                body.appendChild(newdiv);
             }
 
             /* Create scene graph
              */
             var scene = SceneJS.createScene({
-                id:cfg.canvasId,
-                canvasId:cfg.canvasId
+                id:canvasId,
+                canvasId:canvasId
             });
 
             var startTime = (new Date()).getTime();

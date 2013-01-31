@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>xeoEngine Server</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <script src="libs/require.js"></script>
+
+    <script src="libs/jquery/jquery-lib.1.7.1.min.js"></script>
+
+    <style>
+        body {
+            background-color: #000000;
+            margin: 0px;
+            overflow: hidden;
+            height: 100%;
+        }
+    </style>
+
+</head>
+<body>
+
+<script>
+
+    jQuery(document).ready(
+            function () {
+
+                requirejs.config({
+                    baseUrl:"."
+                });
+
+                require([
+                    'libs/actorjs/server.js'
+                ],
+                        function () {
+                        });
+            });
+</script>
+</body>
+</html>
