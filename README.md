@@ -82,12 +82,8 @@ Then we simply drive the xeoServer through the client:
     });
 ```
 
-Plug and play!
-
 ## Examples
-* [Teapot](http://xeolabs.github.com/xeoEngine/teapot.html) - A Newell Teapot resting on a grid ground plane
-* [City](http://xeolabs.github.com/xeoEngine/city.html) - A procedurally-generated city
-* [City Flight](http://xeolabs.github.com/xeoEngine/cityFlight.html) - Flight simulation over a procedurally-generated city
+Find a growing collection of live, tweakable examples over at [CodePen](http://codepen.io/collection/BfogF)
 
 ## Documentation
 To get the gist of xeoEngine, take a look at
