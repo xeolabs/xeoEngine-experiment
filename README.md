@@ -15,7 +15,7 @@ To use xeoEngine, we embed it in a Web page and drive it via RPC calls from scri
 loads one little JavaScript file containing the xeoEngine client through which we fire those calls. None of xeoEngine's
 dependencies appear in our page - only a client object and our RPC calls.
 
-[Try it out on jsFiddle](http://jsfiddle.net/TzFhT/)
+[Try it out on jsFiddle](http://jsfiddle.net/Q3YHk/)
 
 First, our page needs an iframe containing the xeoEngine server page:
 ```html
