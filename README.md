@@ -4,7 +4,7 @@ xeoEngine
 xeoEngine is an insanely modular and abstract WebGL-based 3D engine built on [ActorJS](http://actorjs.org) and [SceneJS](http://scenejs.org).
 
 ## Examples
-Find a growing collection of live and tweakable examples over at [CodePen](http://codepen.io/collection/BfogF)
+Find a growing collection of examples over at [CodePen](http://codepen.io/collection/BfogF)
 
 ## Concept
 
@@ -14,11 +14,9 @@ Via JSON-RPC calls, xeoEngine lets us plug actors together to create 3D worlds, 
 xeoEngine dynamically loads actors from libraries of AMD modules, and the aim is to have an extensive library of
  those actors from which we select as required for each application we build on xeoEngine.
 
-To use xeoEngine, we embed it in a Web page and drive it via RPC calls from scripts in the page. Our page only
+To use xeoEngine, embed it in a Web page and drive it via RPC calls from scripts in the page. Our page only
 loads one little JavaScript file containing the xeoEngine client through which we fire those calls. None of xeoEngine's
 dependencies appear in our page - only a client object and our RPC calls.
-
-[Try it out on jsFiddle](http://jsfiddle.net/Q3YHk/)
 
 First, our page needs an iframe containing the xeoEngine server page:
 ```html
