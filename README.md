@@ -1,28 +1,28 @@
 xeoEngine
 =========
 
-xeoEngine is an insanely modular WebGL-based 3D engine built on [ActorJS](http://actorjs.org) and [SceneJS](http://scenejs.org).
+xeoEngine is an insanely modular and abstract WebGL-based 3D engine built on [ActorJS](http://actorjs.org) and [SceneJS](http://scenejs.org).
 
 ## Concept
 
 Via JSON-RPC calls, xeoEngine lets us plug actors together to create 3D worlds, then fire calls at the actors to make the worlds
  do stuff.
 
-xeoEngine dynamically loads actors from libraries of [RequireJS](http://requirejs.org) AMD modules, and the aim is to have an extensive library of
+xeoEngine dynamically loads actors from libraries of AMD modules, and the aim is to have an extensive library of
  those actors from which we select as required for each application we build on xeoEngine.
 
-To use xeoEngine, we embed it in a Web page and drive it via JSON-RPC calls from a script in that page. Our page only
-loads one little JavaScript file for the xeoEngine client through which we fire those calls. None of xeoEngine's JavaScripty stuff
-(ActorJS, RequireJS etc.) appears in our page, only the client and a bunch of calls.
+To use xeoEngine, we embed it in a Web page and drive it via RPC calls from scripts in the page. Our page only
+loads one little JavaScript file containing the xeoEngine client through which we fire those calls. None of xeoEngine's
+dependencies appear in our page - only a client object and our RPC calls.
 
 [Try it out on jsFiddle](http://jsfiddle.net/TzFhT/)
 
-First, our page needs an iframe containing the xeoEngine [server](https://github.com/xeolabs/xeoEngine/blob/master/server.html):
+First, our page needs an iframe containing the xeoEngine server page:
 ```html
 <iframe id="myIFrame" style="width:800px; height:600px;"
 src="http://xeolabs.github.com/xeoEngine/server.html"></iframe>
 ```
-and the script tag to load the xeoEngine [client class](https://github.com/xeolabs/xeoEngine/blob/master/client.js):
+and the script tag to load the xeoEngine client:
 ```html
 <script src="http://xeolabs.github.com/xeoEngine/client.js"></script>
 ```
@@ -35,14 +35,14 @@ Then we simply drive the xeoServer through the client:
         iframe:"myIFrame"
     });
 
-    /* Add scene actor
+    /* Add a scene actor, which sets up a scene graph
      */
     engine.call("addActor", {
         type:"scene",
         actorId:"scene"
     });
 
-    /* Add a child teapot actor to the root actor. This will create
+    /* Add a teapot actor as a child of scene actor. This will create
      * a teapot in the scene graph.
      */
     engine.call("scene/addActor", {
@@ -82,6 +82,7 @@ Then we simply drive the xeoServer through the client:
     });
 ```
 
+Plug and play!
 
 ## Examples
 * [Teapot](http://xeolabs.github.com/xeoEngine/teapot.html) - A Newell Teapot resting on a grid ground plane

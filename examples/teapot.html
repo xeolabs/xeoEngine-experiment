@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
-    <title>xeoEngine Demo: City</title>
+    <title>xeoEngine Demo: Teapot</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-    <script src="libs/require.js"></script>
+    <script src="../libs/require.js"></script>
 
-    <script src="libs/jquery/jquery-lib.1.7.1.min.js"></script>
+    <script src="../libs/jquery/jquery-lib.1.7.1.min.js"></script>
 
     <style>
         body {
@@ -29,7 +29,7 @@
 </head>
 <body>
 
-<!--<canvas id="theCanvas" style="margin: 0; padding: 0; width: 100%;  height: 100%;"></canvas>-->
+<canvas id="theCanvas" style="margin: 0; padding: 0; width: 100%;  height: 100%;"></canvas>
 
 <script>
 
@@ -46,7 +46,7 @@
                  * http://actorjs.org
                  */
                 require([
-                    'libs/actorjs/actorjs.js'
+                    '../libs/actorjs/actorjs.js'
                 ],
                         function (engine) {
 
@@ -56,45 +56,36 @@
                                 actorClassPath:"actors/"
                             });
 
-                            /* Add scene
+                            /* Add scene actor
                              */
                             engine.call("addActor", {
                                 type:"scene",
-                                actorId:"scene"
-//                                ,
-//                                canvasId:"theCanvas"
+                                actorId:"scene",
+                                canvasId:"theCanvas"
                             });
 
-                            /* Add city actor
+                            /* Add teapot actor to scene
                              */
                             engine.call("scene/addActor", {
-                                type:"objects/buildings/city",
-
-                                xPos:0,
-                                zPos:0,
-
-                                xBuildings:6,
-                                zBuildings:8,
-
-                                xWidth:600,
-                                zWidth:600,
-
-                                streetWidth:20
+                                type:"objects/prims/teapot",
+                                yPos:2
                             });
 
-                            /* Add ground actor
+                            /* Add ground actor to scene
                              */
                             engine.call("scene/addActor", {
                                 type:"objects/ground/grid2"
                             });
 
-                            /* Add navigation actor - orbit about origin using mouse drags, control distance with wheel
+                            /* Add navigation actor to scene
                              */
                             engine.call("scene/addActor", {
                                 type:"navigation/eulerOrbit",
-                                radius:400,
-                                pitch: -10,
-                                yaw: -20
+                                radius:20,
+                                pitch:-2,
+                                yaw:-5,
+                                minPitch:-80,
+                                maxPitch:-2
                             });
                         });
             });

@@ -1,20 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
-    <title>xeoEngine Demo: Tank</title>
+    <title>xeoEngine Demo: City Flight</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-    <script src="libs/require.js"></script>
+    <script src="../libs/require.js"></script>
 
-    <script src="libs/jquery/jquery-lib.1.7.1.min.js"></script>
-
-
-    <link href="http://fonts.googleapis.com/css?family=Raleway:100" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
-    <link rel="stylesheet"
-          href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|Droid+Sans+Mono&v2">
+    <script src="../libs/jquery/jquery-lib.1.7.1.min.js"></script>
 
     <style>
         body {
@@ -52,7 +46,7 @@
                  * http://actorjs.org
                  */
                 require([
-                    'libs/actorjs/actorjs.js'
+                    '../libs/actorjs/actorjs.js'
                 ],
                         function (engine) {
 
@@ -62,44 +56,50 @@
                                 actorClassPath:"actors/"
                             });
 
-                            /* Add scene actor
+                            /* Add scene
                              */
-                            ActorJS.call("addActor", {
+                            engine.call("addActor", {
                                 type:"scene",
                                 actorId:"scene",
                                 canvasId:"theCanvas"
                             });
 
-                            /* Add tank actor to scene
+                            /* City
                              */
-                            ActorJS.call("scene/addActor", {
-                                type:"objects/vehicles/tank",
-                                actorId:"tank"
+                            engine.call("scene/addActor", {
+                                type:"objects/buildings/city",
+
+                                xPos:0,
+                                zPos:0,
+
+                                xBuildings:6,
+                                zBuildings:8,
+
+                                xWidth:600,
+                                zWidth:600,
+
+                                streetWidth:20
                             });
 
-//        /* Tank control
-//         */
-//        this.call("scene/addActor", {
-//            type:"objects/vehicles/tank/input/drive",
-//            mouseActorId:"mouse",
-//            tankActorId:"tank"
-//        });
-
-                            /* Add ground actor to scene
+                            /* Ground
                              */
-                            ActorJS.call("scene/addActor", {
+                            engine.call("scene/addActor", {
                                 type:"objects/ground/grid2"
                             });
 
-                            /* Add navigation actor to scene - orbit about origin using mouse drags, control distance with wheel
+                            /* Navigation
                              */
-                            ActorJS.call("scene/addActor", {
-                                type:"navigation/eulerOrbit",
-                                radius:100,
-                                pitch:-2,
-                                yaw:-5,
-                                minPitch:-80,
-                                maxPitch:-2
+                            engine.call("scene/addActor", {
+                                type:"navigation/airplane",
+
+                                eye:{
+                                    z:-1000,
+                                    y:40
+                                },
+
+                                look:{
+                                    y:40
+                                }
                             });
                         });
             });
