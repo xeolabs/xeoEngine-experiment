@@ -9,12 +9,12 @@ Via JSON-RPC calls, xeoEngine lets us plug actors together to create a 3D world,
  do stuff. xeoEngine dynamically loads actors from libraries of AMD modules, and the aim is to build an extensive library of
  those actors from which we select as required for each app built on xeoEngine.
 
-To use xeoEngine, embed the server page in an iframe:
+To use xeoEngine, embed the [server page](http://xeolabs.github.com/xeoEngine/server.html) in an iframe:
 ```html
 <iframe id="myIFrame" style="width:800px; height:600px;"
 src="http://xeolabs.github.com/xeoEngine/server.html"></iframe>
 ```
-load the xeoEngine client library:
+load the xeoEngine [client library](http://xeolabs.github.com/xeoEngine/client.js):
 ```html
 <script src="http://xeolabs.github.com/xeoEngine/client.js"></script>
 ```
