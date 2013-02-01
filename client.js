@@ -1,6 +1,25 @@
-
+/*
+ * xeoEngine - An webgl-based 3D engine on SceneJS and ActorJS
+ *
+ * https://github.com/xeolabs/xeoEngine
+ * https://scenejs.org
+ * https://actorjs.org
+ *
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * https://github.com/xeolabs/xeoEngine/tree/master/licenses
+ * Copyright 2013, Lindsay Kay
+ * lindsay.kay@xeolabs.com
+ */
 (function () {
 
+    /**
+     * Client which connects with a xeoServer in an IFRAME, using JSON-RPC and publish-subscribe messaging via the HTML Web Messaging API.
+     *
+     * <p>Find usage examples at: https://github.com/xeolabs/xeoEngine</p>
+     *
+     * @param cfg
+     * @param {String} cfg.iframe ID of an IFRAME containing a xeoEngine server page
+     */
     window.xeoEngine = function (cfg) {
 
         if (!cfg.iframe) {
@@ -93,6 +112,12 @@
             }
         }
 
+        /**
+         * Makes an asynchronous JSON-RPC call to a method on the xeoEngine, or on an actor within the engine.
+         * If the call is to an actor that is not yet instantiated, then the call will be buffered until the actor exists.
+         * @param {String} method Path to the method on the engine or target actor
+         * @param {Object} [params] Parameters to pass to the target actor method
+         */
         this.call = function (method, params) {
             sendCall({
                 action:"call",
@@ -101,6 +126,12 @@
             });
         };
 
+        /**
+         * Publishes to a message topic on the xeoEngine, or on an actor within the engine.
+         * If the message is to an actor that is not yet instantiated, then it will be buffered until the actor exists.
+         * @param {String} topic Message topic
+         * @param {Object} [params] The message object
+         */
         this.publish = function (topic, params) {
             sendCall({
                 action:"publish",
@@ -109,6 +140,17 @@
             });
         };
 
+        /**
+         * Subscribes to a message topic on the xeoEngine, or on an actor within the engine.
+         * Returns a handle which may be given to {@link #unsubscribe} to remove the subscription.
+         * If the subscription is on an actor that is not yet instantiated, then it will be buffered and actioned when
+         * the actor appears.
+         * If a message has previously been published to the topic, then the callback will be fired immediately with
+         * that message.
+         * @param {String} topic Message topic
+         * @param {Function(message)} callback Callback which will fire each time a new message is available on the topic
+         * @return {String} Handle to the subscription, which may be given to {@link #unsubscribe} to remove the subscription.
+         */
         this.subscribe = function (topic, callback) {
 
             var handle = subHandles.addItem({
@@ -138,6 +180,10 @@
             return handle;
         };
 
+        /**
+         * Destroys a subscription previously made with {@link #subscribe}.
+         * @param {String} handle Handle to the subscription that was made with {@link #subscribe}.
+         */
         this.unsubscribe = function (handle) {
 
             sendCall({
