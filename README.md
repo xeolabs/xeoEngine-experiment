@@ -18,7 +18,7 @@ load the xeoEngine [client library](http://xeolabs.github.com/xeoEngine/client.j
 ```html
 <script src="http://xeolabs.github.com/xeoEngine/client.js"></script>
 ```
-then create a client and drive xeoServer through it:
+then create a client and drive the xeoEngine server page through it:
 ```javascript
 /* Create a client
  */
