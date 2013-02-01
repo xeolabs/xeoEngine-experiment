@@ -1,7 +1,7 @@
 xeoEngine
 =========
 
-xeoEngine is an abstract and modular WebGL-based 3D engine built on [ActorJS](http://actorjs.org) and [SceneJS](http://scenejs.org).
+xeoEngine is an abstract and modular WebGL-based 3D engine built on [ActorJS](https://github.com/xeolabs/actorjs) and [SceneJS](http://scenejs.org).
 
 ## Concept
 
