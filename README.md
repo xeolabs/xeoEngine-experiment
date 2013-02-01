@@ -20,58 +20,58 @@ load the xeoEngine client library:
 ```
 then create a client and drive xeoServer through it:
 ```javascript
+/* Create a client
+ */
+var engine = new xeoEngine({
+    iframe: "myIFrame"
+});
 
-    /* Create a client
-     */
-    var engine = new xeoEngine({
-        iframe:"myIFrame"
-    });
+/* Add a scene actor, which sets up a scene graph
+ */
+engine.call("addActor", {
+    type: "scene",
+    actorId: "scene"
+});
 
-    /* Add a scene actor, which sets up a scene graph
-     */
-    engine.call("addActor", {
-        type:"scene",
-        actorId:"scene"
-    });
+/* Add a teapot actor as a child of scene actor. This will create
+ * a teapot in the scene graph.
+ */
+engine.call("scene/addActor", {
+    type: "objects/prims/teapot",
+    yPos: 2
+});
 
-    /* Add a teapot actor as a child of scene actor. This will create
-     * a teapot in the scene graph.
-     */
-    engine.call("scene/addActor", {
-        type:"objects/prims/teapot",
-        yPos:2
-    });
+/* Add a child actor to the root actor. This will control the
+ * scene graph's lookat node.
+ */
+engine.call("myScene/addActor", {
+    type: "scene/camera",
+    actorId: "myCamera"
+});
 
-    /* Add a child actor to the root actor. This will control the
-     * scene graph's lookat node.
-     */
-    engine.call("myScene/addActor", {
-        type: "scene/camera",
-        actorId: "myCamera"
-    });
+/* Subscribe to the "eye" topic that is published to by
+ * the camera actor whenever its eye position changes.
+ * See how we specify a path down through the hierarchy
+ * to the camera actor's topic.
+ */
+engine.subscribe("myScene/myCamera/eye",
 
-    /* Subscribe to the "eye" topic that is published to by
-     * the camera actor whenever its eye position changes.
-     * See how we specify a path down through the hierarchy
-     * to the camera actor's topic.
-     */
-    engine.subscribe("myScene/myCamera/eye",
-        function(update) {
+function (update) {
 
-            var eye = update.eye;
+    var eye = update.eye;
 
-            //..
-        });
+    //..
+});
 
-    /* Call a method on the camera actor to set the eye position.
-     * This will cause the actor to publish to its "eye" topic,
-     * which will get handled by the subscription we made above.
-     */
-    engine.call("myScene/myCamera/setEye", {
-        x: -30,
-        y: 0,
-        z: 50
-    });
+/* Call a method on the camera actor to set the eye position.
+ * This will cause the actor to publish to its "eye" topic,
+ * which will get handled by the subscription we made above.
+ */
+engine.call("myScene/myCamera/setEye", {
+    x: -30,
+    y: 0,
+    z: 50
+});
 ```
 
 ## Examples
