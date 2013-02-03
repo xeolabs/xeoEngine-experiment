@@ -42,10 +42,16 @@
                     baseUrl:"."
                 });
 
+                var server;
+
                 require([
-                    'libs/actorjs/server.js'
+                    'libs/actorjs/server'
                 ],
-                        function () {
+                        function (Server) {
+
+                            server = new Server({
+                                //..configs
+                            });
                         });
             });
 </script>

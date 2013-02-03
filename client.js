@@ -13,7 +13,7 @@
 (function () {
 
     /**
-     * Client which connects with a xeoServer in an IFRAME, using JSON-RPC and publish-subscribe messaging via the HTML Web Messaging API.
+     * Client which connects with a xeoServer in an IFRAME, using JSON-RPC and publish-subscribe messaging via the HTML Cross-Domain Messaging API.
      *
      * <p>Find usage examples at: https://github.com/xeolabs/xeoEngine</p>
      *
@@ -45,7 +45,6 @@
         var callBuf = []; // Buffers outbound calls while not connected
 
         var connectInterval;
-
 
         window.addEventListener('message',
             function (event) {
@@ -84,10 +83,15 @@
 
                     case "error":
 
-                        // TODO
+                        var error = event.data;
+
+                        if (cfg.onError) {
+                            cfg.onError(error);
+                        }
+
+                        throw error;
 
                         break;
-
                 }
             }, false);
 
@@ -266,7 +270,6 @@
             this.items = items || [];
             lastUniqueIndex = 0;
         }
-
     };
 
 })();

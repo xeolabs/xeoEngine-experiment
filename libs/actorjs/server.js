@@ -1,91 +1,109 @@
 /*
+
+ Wraps an ActorJS instance and exposes its methods via the HTML Cross-Document Messaging API
+
+ http://en.wikipedia.org/wiki/Cross-document_messaging
+
  */
-require([
-    'libs/actorjs/actorjs.js'
+define([
+    'libs/actorjs/actorjs'
 ],
     function (actorjs) {
 
-        var client;
-        var clientOrigin;
+        return function () {
 
-        var sendBuf = [];
-        var handleMap = {};
+            var client;
+            var clientOrigin;
 
-        /* Tell ActorJS where to find actor types
-         */
-        actorjs.configure({
-            actorClassPath:"actors/"
-        });
+            var sendBuf = [];
+            var handleMap = {};
 
-        if (window.addEventListener) {
+            /* Tell ActorJS where to find actor types
+             */
+            actorjs.configure({
+                actorClassPath:"actors/"
+            });
 
-            addEventListener("message",
-                function (event) {
+            if (window.addEventListener) {
 
-                    var call = JSON.parse(event.data);
+                addEventListener("message",
+                    function (event) {
 
-                    if (call.action) {
+                        try {
+                            var call = JSON.parse(event.data);
 
-                        switch (call.action) {
+                            if (call.action) {
 
-                            case "connect" :
+                                switch (call.action) {
 
-                                send({ message:"connected" });
+                                    case "connect" :
 
-                                client = event.source;
-                                clientOrigin = event.origin;
+                                        send({ message:"connected" });
 
-                                break;
+                                        client = event.source;
+                                        clientOrigin = event.origin;
 
-                            case "call":
+                                        break;
 
-                                actorjs.call(call.method, call.params);
+                                    case "call":
 
-                                break;
+                                        actorjs.call(call.method, call.params);
 
-                            case "publish":
+                                        break;
 
-                                actorjs.publish(call.topic, call.params);
+                                    case "publish":
 
-                                break;
+                                        actorjs.publish(call.topic, call.params);
 
-                            case "subscribe":
+                                        break;
 
-                                handleMap[call.handle] = actorjs.subscribe(
-                                    call.topic,
-                                    function (pub) {
-                                        send({ message:"published", topic:call.topic, published:pub, handle:call.handle });
-                                    });
+                                    case "subscribe":
 
-                                break;
+                                        handleMap[call.handle] = actorjs.subscribe(
+                                            call.topic,
+                                            function (pub) {
+                                                send({ message:"published", topic:call.topic, published:pub, handle:call.handle });
+                                            });
 
-                            case "unsubscribe":
+                                        break;
 
-                                actorjs.unsubscribe(handleMap[call.handle]);
+                                    case "unsubscribe":
 
-                                delete handleMap[call.handle];
+                                        actorjs.unsubscribe(handleMap[call.handle]);
 
-                                break;
+                                        delete handleMap[call.handle];
+
+                                        break;
+                                }
+                            }
+
+                        } catch (e) {
+
+                            send({
+                                message:"error",
+                                exception:e
+                            });
                         }
-                    }
 
-                }, false);
+                    }, false);
 
-        } else {
-            console.error("browser does not support Web Message API");
-        }
 
-        function sendBuffered() {
-            while (sendBuf.length > 0) {
-                send(sendBuf.pop());
-            }
-        }
-
-        function send(message) {
-            if (!client) {
-                sendBuf.push(message);
             } else {
-                client.postMessage(JSON.stringify(message), clientOrigin);
+                console.error("browser does not support Web Message API");
             }
-        }
+
+            function sendBuffered() {
+                while (sendBuf.length > 0) {
+                    send(sendBuf.pop());
+                }
+            }
+
+            function send(message) {
+                if (!client) {
+                    sendBuf.push(message);
+                } else {
+                    client.postMessage(JSON.stringify(message), clientOrigin);
+                }
+            }
+        };
     });

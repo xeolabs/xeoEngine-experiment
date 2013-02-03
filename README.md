@@ -26,33 +26,33 @@ var engine = new xeoEngine({
     iframe: "myIFrame"
 });
 
-/* Add a scene actor, which sets up a scene graph
+/* Add a scene actor - this will be the root of our actor hierarchy
+ * and will provide a scene graph to its child actors.
  */
 engine.call("addActor", {
     type: "scene",
-    actorId: "scene"
+    actorId: "myScene"
 });
 
-/* Add a teapot actor as a child of scene actor. This will create
+/* Add a teapot actor as a child of the scene actor. This will create
  * a teapot in the scene graph.
  */
-engine.call("scene/addActor", {
+engine.call("myScene/addActor", {
     type: "objects/prims/teapot",
     yPos: 2
 });
 
-/* Add a child actor to the root actor. This will control the
- * scene graph's lookat node.
+/* Add a camera actor as a second child of the scene actor. This will control the
+ * scene graph's "lookat" node.
  */
 engine.call("myScene/addActor", {
     type: "scene/camera",
     actorId: "myCamera"
 });
 
-/* Subscribe to the "eye" topic that is published to by
- * the camera actor whenever its eye position changes.
- * See how we specify a path down through the hierarchy
- * to the camera actor's topic.
+/* Subscribe to "eye" messages published by the camera actor whenever its eye
+ * position changes. See how we specify a path down through the actor hierarchy
+ * to the camera actor's "eye" topic.
  */
 engine.subscribe("myScene/myCamera/eye",
 
@@ -64,8 +64,8 @@ function (update) {
 });
 
 /* Call a method on the camera actor to set the eye position.
- * This will cause the actor to publish to its "eye" topic,
- * which will get handled by the subscription we made above.
+ * This will cause the actor to publish a message to its "eye" topic,
+ * which we'll handle with the subscription we made above.
  */
 engine.call("myScene/myCamera/setEye", {
     x: -30,
