@@ -2,7 +2,7 @@
  * Canvas snapshot actor
  */
 define([
-    "libs/canvas2image"
+    "lib/canvas2image"
 ],
     function () {
 

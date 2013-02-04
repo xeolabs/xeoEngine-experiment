@@ -5,7 +5,7 @@
  *
  */
 define([
-    "libs/scenejs/scenejs.js"
+    "lib/scenejs/scenejs.js"
 ],
     function () {
 

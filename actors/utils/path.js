@@ -17,8 +17,8 @@
  *
  */
 define([
-    ".././gl-matrix",
-    ".././scenejs.sphere"
+    "lib/gl-matrix",
+    "lib/scenejs.sphere"
 ],
     function () {
 

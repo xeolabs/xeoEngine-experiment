@@ -87,7 +87,7 @@
 
  */
 define([
-    "../../libs/gl-matrix"
+    "lib/gl-matrix"
 ],
 
     function () {

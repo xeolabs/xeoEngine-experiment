@@ -1,11 +1,11 @@
 define([
-    "../../../libs/jquery/jquery-lib.1.7.1.min.js",
-    "../../../libs/html2canvas"
+    "lib/jquery/jquery-lib.1.7.1.min.js",
+    "lib/html2canvas"
 ],
 
     function () {
 
-var Human_Label3DFactory = function (containerNode) {
+var Label3DFactory = function (containerNode) {
 
     var textureSourceId = "__tex";
 

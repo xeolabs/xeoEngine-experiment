@@ -2,7 +2,7 @@
  * Grid floor actor
  *
  */
-define(["../../../libs/scenejs/scenejs.box.js"],
+define(["lib/scenejs/scenejs.box.js"],
 
     function () {
 

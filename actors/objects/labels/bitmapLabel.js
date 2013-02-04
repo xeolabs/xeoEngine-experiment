@@ -40,7 +40,7 @@
     });
  */
 
-define(["../.././scenejs.texture.text.js"],
+define(["lib/scenejs.texture.text.js"],
 
     function () {
 

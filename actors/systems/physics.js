@@ -2,7 +2,7 @@
  * Physics system
  */
 define([
-    "../../libs/jiglib.all.min.js"
+    "lib/jiglib.all.min.js"
 ],
 
     function () {

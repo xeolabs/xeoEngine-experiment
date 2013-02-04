@@ -11,7 +11,7 @@
     });
  */
 define([
-    "../../libs/obj-loader"
+    "lib/obj-loader"
 ],
 
     function (loader) {

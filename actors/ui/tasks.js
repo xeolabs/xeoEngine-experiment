@@ -4,7 +4,7 @@
  * http://visionmedia.github.com/uikit/
  */
 define([
-    "../../ui"
+    "lib/ui"
 ],
 
     function () {
