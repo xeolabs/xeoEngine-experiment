@@ -1,19 +1,20 @@
 /*
- * xeoEngine - An webgl-based 3D engine on SceneJS and ActorJS
- *
- * https://github.com/xeolabs/xeoEngine
- * https://scenejs.org
- * https://actorjs.org
- *
- * Dual licensed under the MIT or GPL Version 2 licenses.
- * https://github.com/xeolabs/xeoEngine/tree/master/licenses
- * Copyright 2013, Lindsay Kay
- * lindsay.kay@xeolabs.com
+
+ https://github.com/xeolabs/xeoEngine
+ https://scenejs.org
+ https://actorjs.org
+
+ Dual licensed under the MIT or GPL Version 2 licenses.
+ https://github.com/xeolabs/xeoEngine/tree/master/licenses
+ Copyright 2013, Lindsay Kay
+ lindsay.kay@xeolabs.com
+
  */
 (function () {
 
     /**
-     * Client which connects with a xeoServer in an IFRAME, using JSON-RPC and publish-subscribe messaging via the HTML Cross-Domain Messaging API.
+     * Client which connects with a xeoServer in an IFRAME, using JSON-RPC and publish-subscribe messaging via
+     * the HTML Cross-Domain Messaging API.
      *
      * <p>Find usage examples at: https://github.com/xeolabs/xeoEngine</p>
      *
