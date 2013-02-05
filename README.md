@@ -1,7 +1,8 @@
 xeoEngine
 =========
 
-xeoEngine is an abstract and modular WebGL-based 3D engine built on [ActorJS](https://github.com/xeolabs/actorjs) and [SceneJS](http://scenejs.org).
+xeoEngine is a WebGL-based engine built on [ActorJS](https://github.com/xeolabs/actorjs) and [SceneJS](http://scenejs.org)
+that lets you create and drive 3D worlds over a network.
 
 ## Concept
 
@@ -46,7 +47,7 @@ engine.call("myScene/addActor", {
  * scene graph's "lookat" node.
  */
 engine.call("myScene/addActor", {
-    type: "scene/camera",
+    type: "camera",
     actorId: "myCamera"
 });
 
