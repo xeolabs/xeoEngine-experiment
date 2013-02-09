@@ -58,18 +58,11 @@
 
  */
 define([
-    "../../../.././gl-matrix"
+    "lib/gl-matrix.js"
 ],
     function () {
 
-        return function (scope, configs) {
-
-            var tankActorId = configs.tankActorId;
-
-            if (!tankActorId) {
-                throw "param expected: tankActorId";
-            }
-
+        return function (cfg) {
 
             /* Current tank state
              */
@@ -89,22 +82,22 @@ define([
 
             /* Set initial tank state
              */
-            scope.call(tankActorId + ".setYaw", { yaw:yaw });
-            scope.call(tankActorId + ".setGunYaw", { gunYaw:gunYaw });
+            this.call("setYaw", { yaw:yaw });
+            this.call("setGunYaw", { gunYaw:gunYaw });
 
 
             /* Update tank state for animation
              */
-            var tick = scope.subscribe("scene.tick", function () {
+            var tick = this.subscribe("tick", function () {
 
                 if (yawRate != 0) {
                     yaw += yawRate;
-                    scope.call(tankActorId + ".setYaw", { yaw:yaw });
+                    this.call("setYaw", { yaw:yaw });
                 }
 
                 if (gunYawRate != 0) {
                     gunYaw += gunYawRate;
-                    scope.call(tankActorId + ".setGunYaw", { gunYaw:gunYaw });
+                    this.call("setGunYaw", { gunYaw:gunYaw });
                 }
 
                 if (speed) {
@@ -122,7 +115,7 @@ define([
                     pos.y += moveVec.y;
                     pos.z += moveVec.z;
 
-                    scope.call(tankActorId + ".setPos", pos);
+                    this.call("setPos", pos);
                 }
             });
 
@@ -134,12 +127,12 @@ define([
                 }
 
                 if (params.yaw != undefined) {
-                    scope.call(tankActorId + ".setYaw", { yaw:params.yaw });
+                    this.call("setYaw", { yaw:params.yaw });
                     yaw = params.yaw;
                 }
 
                 if (params.gunYaw != undefined) {
-                    scope.call(tankActorId + ".setGunYaw", { gunYaw:params.gunYaw });
+                    this.call("setGunYaw", { gunYaw:params.gunYaw });
                     gunYaw = params.gunYaw;
                 }
 
@@ -150,10 +143,6 @@ define([
                 if (params.gunYawRate != undefined) {
                     gunYawRate = params.gunYawRate;
                 }
-            };
-
-            this._destroy = function () {
-                scope.unsubscribe(tick);
             };
         };
     });
