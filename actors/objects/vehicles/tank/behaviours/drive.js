@@ -85,39 +85,41 @@ define([
             this.call("setYaw", { yaw:yaw });
             this.call("setGunYaw", { gunYaw:gunYaw });
 
+            var self = this;
 
             /* Update tank state for animation
              */
-            var tick = this.subscribe("tick", function () {
+            var tick = this.subscribe("tick",
+                function () {
 
-                if (yawRate != 0) {
-                    yaw += yawRate;
-                    this.call("setYaw", { yaw:yaw });
-                }
+                    if (yawRate != 0) {
+                        yaw += yawRate;
+                        self.call("setYaw", { yaw:yaw });
+                    }
 
-                if (gunYawRate != 0) {
-                    gunYaw += gunYawRate;
-                    this.call("setGunYaw", { gunYaw:gunYaw });
-                }
+                    if (gunYawRate != 0) {
+                        gunYaw += gunYawRate;
+                        self.call("setGunYaw", { gunYaw:gunYaw });
+                    }
 
-                if (speed) {
+                    if (speed) {
 
-                    var vecRotMat = Tron_math_rotationMat4v(yaw * 0.0174532925, [0, 1, 0]);
-                    var v = Tron_math_mulMat4v4(vecRotMat, [0, 0, -speed, 1]);
+                        var vecRotMat = Tron_math_rotationMat4v(yaw * 0.0174532925, [0, 1, 0]);
+                        var v = Tron_math_mulMat4v4(vecRotMat, [0, 0, -speed, 1]);
 
-                    var moveVec = {
-                        x:v[0],
-                        y:v[1],
-                        z:v[2]
-                    };
+                        var moveVec = {
+                            x:v[0],
+                            y:v[1],
+                            z:v[2]
+                        };
 
-                    pos.x += moveVec.x;
-                    pos.y += moveVec.y;
-                    pos.z += moveVec.z;
+                        pos.x += moveVec.x;
+                        pos.y += moveVec.y;
+                        pos.z += moveVec.z;
 
-                    this.call("setPos", pos);
-                }
-            });
+                        self.call("setPos", pos);
+                    }
+                });
 
 
             this.set = function (params) {

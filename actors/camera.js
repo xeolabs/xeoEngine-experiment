@@ -1,12 +1,11 @@
-/**
- * Camera management actor
- *
- * - Expects a scene graph resource with a lookat node
- * - Provides methods to set the lookat's eye, look and up
- */
 define(
     function () {
 
+        /**
+         * Controls a camera
+         * @name objects.camera
+         * @class objects/camera
+         */
         return  function (cfg) {
 
             var scene = this.getObject("scene");
@@ -25,7 +24,8 @@ define(
 
 
             /** Sets state of the camera
-             *
+             * @name camera#set
+             * @function
              * @param params
              * @param params.eye Eye pos
              * @param params.look Look pos
