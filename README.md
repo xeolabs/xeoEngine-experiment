@@ -72,7 +72,7 @@ engine.call("myScene/myCamera/setEye", {
 ```
 
 ## Examples
-Find a growing collection of examples over at [CodePen](http://codepen.io/collection/BfogF)
+Find a growing collection of examples over at [CodePen](http://codepen.io/xeolabs/tag/xeoengine)
 
 ## Documentation
 To get the gist of xeoEngine, take a look at
