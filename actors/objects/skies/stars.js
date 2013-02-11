@@ -34,11 +34,12 @@ define(["lib/scenejs/scenejs.sphere.js"],
                                         src:"textures/milky-way.gif",
                                         applyTo:"baseColor",
                                         blendMode:"multiply",
-                                        flipY:false,
-                                        scale:{
-                                            x:1.5,
-                                            y:1.0
-                                        }
+                                        flipY:false
+//                                        ,
+//                                        scale:{
+//                                            x:1.5,
+//                                            y:1.0
+//                                        }
                                     }
                                 ],
 
