@@ -14,6 +14,7 @@ define(
             var yaw = configs.yaw || 0;
             var pitch = configs.pitch || 0;
             var radius = configs.radius || 100;
+            var radiusSensitivity = configs.radiusSensitivity || 10.0;
 
             this.call("addActor", {
                 type:"camera/behaviour/eulerOrbit",
@@ -82,7 +83,7 @@ define(
                 "mouse/mousewheel",
                 function (params) {
 
-                    radius += (params.delta * 30.0);
+                    radius += (params.delta * radiusSensitivity);
 
                     setOrbit(yaw, pitch, radius);
                 });
