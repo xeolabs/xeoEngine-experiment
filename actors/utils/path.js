@@ -172,7 +172,7 @@ define([
                                     nodes:[
                                         {
                                             type:"geometry",
-                                            asset:{
+                                            source:{
                                                 type:"sphere"
                                             }
                                         }
@@ -204,7 +204,7 @@ define([
                                 nodes:[
                                     {
                                         type:"geometry",
-                                        asset:{
+                                        source:{
                                             type:"sphere"
                                         }
                                     }

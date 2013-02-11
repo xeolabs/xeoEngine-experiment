@@ -45,7 +45,7 @@ define(["lib/scenejs/scenejs.sphere.js"],
                                 nodes:[
                                     {
                                         type:"geometry",
-                                        asset:{
+                                        source:{
                                             type:"sphere"
                                         }
                                     }

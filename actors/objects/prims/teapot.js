@@ -49,7 +49,7 @@ define([
 
             material.addNode({
                 type:"geometry",
-                asset:{
+                source:{
                     type:"teapot"
                 }
             });

@@ -2,11 +2,11 @@ define(["lib/scenejs/scenejs.vectorText.js"],
 
     function () {
 
-        return function (configs) {
+        return function (cfg) {
 
             var scene = this.getObject("scene");
 
-            var nodeId = configs.nodeId || "world";
+            var nodeId = cfg.nodeId || "world";
 
             var node = scene.getNode(nodeId);
             if (!node) {
@@ -15,12 +15,12 @@ define(["lib/scenejs/scenejs.vectorText.js"],
 
             var root = node.addNode({
                 type:"geometry",
-                asset:{
+                source:{
                     type:"vectorText", // Depends on the SceneJS text plugin in file scenejs.vectorText.js
-                    text:configs.text || "",
-                    xPos:configs.xPos,
-                    yPos:configs.yPos,
-                    zPos:configs.zPos
+                    text:cfg.text || "",
+                    xPos:cfg.xPos,
+                    yPos:cfg.yPos,
+                    zPos:cfg.zPos
                 }
             });
 

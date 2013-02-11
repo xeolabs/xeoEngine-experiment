@@ -1,11 +1,15 @@
-/**
- * Grid floor actor
- *
- */
 define(["lib/scenejs/scenejs.box.js"],
 
     function () {
 
+        /**
+         * grid1
+         * Ground grid plane
+         * @name grid1
+         * @class grid1
+         * @constructor
+         * @return  constructor
+         */
         return function (configs) {
 
             var scene = this.getObject("scene");
@@ -60,7 +64,7 @@ define(["lib/scenejs/scenejs.box.js"],
                                 nodes:[
                                     {
                                         type:"geometry",
-                                        asset:{
+                                        source:{
                                             type:"box"
                                         }
                                     }

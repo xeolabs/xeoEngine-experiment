@@ -60,7 +60,7 @@ define(["lib/scenejs/scenejs.box.js"],
                                 nodes:[
                                     {
                                         type:"geometry",
-                                        asset:{
+                                        source:{
                                             type:"box"
                                         }
                                     }

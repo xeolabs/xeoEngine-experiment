@@ -385,7 +385,7 @@ define(["lib/scenejs/scenejs.box.js"],
                         nodes:[
                             {
                                 type:"geometry",
-                                asset:{
+                                source:{
                                     type:"box",
                                     xSize:xsize,
                                     ySize:ysize,
@@ -421,7 +421,7 @@ define(["lib/scenejs/scenejs.box.js"],
                 })
                 .addNode({
                     type:"geometry",
-                    asset:{
+                    source:{
                         type:"box",
                         xSize:xsize,
                         ySize:buildingType.roof.height,
@@ -441,7 +441,7 @@ define(["lib/scenejs/scenejs.box.js"],
                 })
                 .addNode({
                     type:"geometry",
-                    asset:{
+                    source:{
                         type:"box",
                         xSize:xsize,
                         ySize:ysize,
@@ -468,7 +468,7 @@ define(["lib/scenejs/scenejs.box.js"],
                         nodes:[
                             {
                                 type:"geometry",
-                                asset:{
+                                source:{
                                     type:"box",
                                     xSize:4,
                                     ySize:2.0,
@@ -502,7 +502,7 @@ define(["lib/scenejs/scenejs.box.js"],
                         nodes:[
                             {
                                 type:"geometry",
-                                asset:{
+                                source:{
                                     type:"box",
                                     xSize:0.2,
                                     ySize:6.0,
@@ -532,7 +532,7 @@ define(["lib/scenejs/scenejs.box.js"],
                         nodes:[
                             {
                                 type:"geometry",
-                                asset:{
+                                source:{
                                     type:"box",
                                     xSize:0.7,
                                     ySize:0.5,
