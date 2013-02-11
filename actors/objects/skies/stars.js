@@ -15,9 +15,9 @@ define(["lib/scenejs/scenejs.sphere.js"],
 
             var root = node.addNode({
                 type:"scale",
-                x:5000,
-                y:5000,
-                z:5000,
+                x:2000,
+                y:2000,
+                z:2000,
 
                 nodes:[
                     {
