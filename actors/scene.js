@@ -202,6 +202,40 @@ define([
                                     up:{ x:0, y:1, z:.0 },
 
                                     nodes:[
+                                    /**
+                                     * Sky-space branch
+                                     *
+                                     * As the user's location and orientation changes, nodes in this branch will
+                                     * rotate about the viewpoint but will not translate, creating the effect that
+                                     * they are far away in the distance.
+                                     *
+                                     */
+                                        {
+                                            type:"shader",
+
+                                            id:"sky",
+
+                                            shaders:[
+
+                                                /* Vertex shader to intercept the view matrix and remove translations
+                                                 */
+                                                {
+                                                    stage:"vertex",
+                                                    code:[
+
+                                                        "mat4 myViewMatrix(mat4 m) {",
+                                                        "   m[3][0] =m[3][1] = m[3][2] = 0.0;" +
+                                                            "   return m; ",
+                                                        "}"
+                                                    ],
+
+                                                    hooks:{
+                                                        viewMatrix:"myViewMatrix"  // Bind our custom function to hook
+                                                    }
+                                                }
+                                            ]
+                                        },
+
                                         {
                                             type:"lights",
                                             id:"lights",
