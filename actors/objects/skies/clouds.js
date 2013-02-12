@@ -1,4 +1,4 @@
-define(["lib/scenejs/scenejs.sphere.js"],
+define(["lib/scenejs/scenejs.skybox.js"],
 
     function () {
 
@@ -6,7 +6,7 @@ define(["lib/scenejs/scenejs.sphere.js"],
 
             var scene = this.getObject("scene");
 
-            var nodeId = configs.nodeId || "world";
+            var nodeId = configs.nodeId || "sky";
 
             var node = scene.getNode(nodeId);
             if (!node) {
@@ -15,9 +15,9 @@ define(["lib/scenejs/scenejs.sphere.js"],
 
             var root = node.addNode({
                 type:"scale",
-                x:5000,
-                y:5000,
-                z:5000,
+                x:1,
+                y:1,
+                z:1,
 
                 nodes:[
                     {
@@ -31,14 +31,10 @@ define(["lib/scenejs/scenejs.sphere.js"],
                                 coreId:"__sky-texture",
                                 layers:[
                                     {
-                                        src:"textures/sky_povray.jpg",
+                                        src:"textures/clouds-box.jpg",
                                         applyTo:"baseColor",
                                         blendMode:"multiply",
-                                        flipY:false,
-                                        scale:{
-                                            x:1.5,
-                                            y:1.0
-                                        }
+                                        flipY:false
                                     }
                                 ],
 
@@ -46,7 +42,10 @@ define(["lib/scenejs/scenejs.sphere.js"],
                                     {
                                         type:"geometry",
                                         source:{
-                                            type:"sphere"
+                                            type:"skybox",
+                                            xSize:5000,
+                                            ySize:5000,
+                                            zSize:5000
                                         }
                                     }
                                 ]
