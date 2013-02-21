@@ -19,7 +19,7 @@ body {
     display: block;
 }
 
-#about {
+#server {
     font-family: Monospace;
 
     width: 600px;
@@ -32,7 +32,7 @@ body {
     visibility: visible;
 }
 
-#about .title {
+#server .title {
     font-family: Monospace;
     font-size: 52px;
     color: #82FA95;
@@ -42,7 +42,7 @@ body {
     font-weight: bold;
 }
 
-#about p.link {
+#server p.link {
     font-family: Monospace;
     font-size: 14px;
     color: #ffffff;
@@ -52,25 +52,44 @@ body {
     color: #b8b8b8;
 }
 
-#about p {
+#server p {
     font-family: Monospace;
     font-size: 12px;
     color: #ff6600;
 }
 
-
-#about a:visited {
+#server a:visited {
     color: #B8B8B8;
 }
 
-#about a:hover {
+#server a:hover {
     color: #ffffff;
 }
 
-#about p.welcome {
+#server p.welcome {
     font-family: Monospace;
     font-size: 16px;
     /*font-style: italic;*/
     color: #A5FFED;
-    padding-top:0px;
+    padding-top: 0px;
+}
+
+#server #nowebgl #message {
+    font-family: Monospace;
+    font-size: 24px;
+    font-weight: bold;
+    /*font-style: italic;*/
+    color: #ff000a;
+    padding-top: 15px;
+    padding-bottom: 3px;
+}
+
+#server #nowebgl #getwebgl {
+    font-family: Monospace;
+    font-size: 12px;
+    font-weight: bold;
+    /*font-style: italic;*/
+    color: #ebe8f4;
+    padding-top: 15px;
+    padding-bottom: 3px;
 }

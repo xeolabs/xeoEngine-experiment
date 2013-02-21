@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
     <script src="lib/require.js"></script>
-
-    <script src="lib/jquery/jquery-lib.1.7.1.min.js"></script>
+    <script src="lib/scenejs/scenejs.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
@@ -17,7 +16,7 @@
 
 <div id="container">
 
-    <div id="about">
+    <div id="server">
 
         <img src="images/xeolabs-logo-med.jpg">
 
@@ -28,31 +27,45 @@
         <p class="link"><a href="https://github.com/xeolabs/xeoEngine" target="_blank">https://github.com/xeolabs/xeoEngine</a>
         </p>
 
-        <!--<p class="callme">[ Waiting for your JSON-RPC.. ]</p>-->
-
+        <div id="nowebgl" style="visibility: hidden;">
+            <p id="message">ERROR: WebGL not found! </p>
+            <p id="getwebgl"><a href="http://get.webgl.org/" target="_other">Here's how to get it</a></p>
+        </div>
     </div>
 </div>
 
 <script>
 
-    jQuery(document).ready(
-            function () {
+    var errorCaught = false;
 
-                requirejs.config({
-                    baseUrl:"."
+    if (document.location.search.indexOf("nowebgl") > -1) {
+        var noWebGL = document.getElementById('nowebgl');
+        noWebGL.style.visibility = "";
+
+    } else {
+
+        SceneJS.bind("error",
+                function (e) {
+                    if (e.errorName == "WEBGL_NOT_SUPPORTED") {
+                        window.location.replace("server.html?nowebgl=true");
+                    }
                 });
+    }
 
-                var server;
+    requirejs.config({
+        baseUrl:"."
+    });
 
-                require([
-                    'lib/actorjs/server'
-                ],
-                        function (Server) {
+    var server;
 
-                            server = new Server({
-                                //..configs
-                            });
-                        });
+    require([
+        'lib/actorjs/server'
+    ],
+            function (Server) {
+
+                server = new Server({
+                    //..configs
+                });
             });
 </script>
 </body>

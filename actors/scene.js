@@ -5,9 +5,9 @@
  *
  */
 define([
-    "lib/scenejs/scenejs.js"
+    "lib/pickMap.js"
 ],
-    function () {
+    function (PickMap) {
 
         return function (cfg) {
 
@@ -21,7 +21,7 @@ define([
                  */
                 canvasId = "canvas-" + this.actorId;
                 var body = document.getElementsByTagName("body")[0];
-                body.innerHTML = ''
+                body.innerHTML = '';
                 var newdiv = document.createElement('div');
                 newdiv.style.height = "100%";
                 newdiv.style.width = "100%";
@@ -61,8 +61,12 @@ define([
 
             /* Provide scene for child actors            
              */
-            this.setObject("scene", scene);
+            this.setResource("scene", scene);
 
+            /* Resource which maps pick names back to the actors which created their 'name' scene nodes
+             */
+            var pickMap = new PickMap();
+            this.setResource("pickMap", pickMap);
 
             /**
              * Fires a "scene.pickhit" event for any hit on
@@ -91,6 +95,7 @@ define([
                 scene.renderFrame({ force:true });     // HACK: Fixes black flicker after picking
 
                 if (hit) {
+                    hit.actors = pickMap.get(hit.name);
                     this.publish("pickhit", hit);
 
                 } else {
