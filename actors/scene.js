@@ -59,7 +59,7 @@ define(
 
             /* Provide scene for child actors            
              */
-            this.setResource("scene", scene);
+            this.setObject("scene", scene);
 
             /**
              * Fires a "scene.pickhit" event for any hit on
@@ -86,6 +86,13 @@ define(
                 var hit = scene.pick(canvasX, canvasY, params);
 
                 scene.renderFrame({ force:true });     // HACK: Fixes black flicker after picking
+
+                if (hit) {
+                    this.publish("pickhit", hit);
+
+                } else {
+                    this.publish("pickmiss", params);
+                }
             };
 
 
