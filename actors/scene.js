@@ -4,10 +4,8 @@
  * - Provides method to pick on the scene graph, which publishes "pickhit" or "pickmiss" events
  *
  */
-define([
-    "lib/pickMap.js"
-],
-    function (PickMap) {
+define(
+    function () {
 
         return function (cfg) {
 
@@ -63,11 +61,6 @@ define([
              */
             this.setResource("scene", scene);
 
-            /* Resource which maps pick names back to the actors which created their 'name' scene nodes
-             */
-            var pickMap = new PickMap();
-            this.setResource("pickMap", pickMap);
-
             /**
              * Fires a "scene.pickhit" event for any hit on
              * a named object in the scene, or a "scene.pickmiss" if nothing hit
@@ -93,14 +86,6 @@ define([
                 var hit = scene.pick(canvasX, canvasY, params);
 
                 scene.renderFrame({ force:true });     // HACK: Fixes black flicker after picking
-
-                if (hit) {
-                    hit.actors = pickMap.get(hit.name);
-                    this.publish("pickhit", hit);
-
-                } else {
-                    this.publish("pickmiss", params);
-                }
             };
 
 
