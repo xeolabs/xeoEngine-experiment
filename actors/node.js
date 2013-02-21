@@ -8,7 +8,7 @@ define(
                 throw "param expected: node";
             }
 
-            var scene = this.getObject("scene");
+            var scene = this.getResource("scene");
 
             var nodeId = cfg.nodeId || "world";
 

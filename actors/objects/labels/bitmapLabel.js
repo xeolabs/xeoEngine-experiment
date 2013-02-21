@@ -44,11 +44,11 @@ define(["lib/scenejs.texture.text.js"],
 
     function () {
 
-        return function (configs) {
+        return function (cfg) {
 
-            var scene = this.getObject("scene");
+            var scene = this.getResource("scene");
 
-            var nodeId = configs.nodeId || "view";
+            var nodeId = cfg.nodeId || "view";
 
             var node = scene.getNode(nodeId);
             if (!node) {
@@ -82,7 +82,7 @@ define(["lib/scenejs.texture.text.js"],
                 y:1.5
             };
 
-            var pointSize = configs.pointSize || 1.0;
+            var pointSize = cfg.pointSize || 1.0;
 
             var texture = material.addNode({
                 type:"texture",
@@ -91,10 +91,10 @@ define(["lib/scenejs.texture.text.js"],
                         // Use plugin defined in scenejs.texture.text.js
                         source:{
                             type:"text",
-                            text:configs.text || "",
-                            bgFillStyle:configs.bgFillStyle || "#000000", // Background colour
-                            textFillStyle:configs.textFillStyle || "#FFFFFF", // Text colour, can take a hex value or rgba value (e.g. rgba(255,0,0,0.5))
-                            font:configs.font || "64px monospace",
+                            text:cfg.text || "",
+                            bgFillStyle:cfg.bgFillStyle || "#000000", // Background colour
+                            textFillStyle:cfg.textFillStyle || "#FFFFFF", // Text colour, can take a hex value or rgba value (e.g. rgba(255,0,0,0.5))
+                            font:cfg.font || "64px monospace",
                             textAlign:"left", // Alignment of text, e.g. left, center, right
                             textBaseline:"top" // Baseline of the text, e.g. top, middle, bottom
                         },
@@ -107,8 +107,8 @@ define(["lib/scenejs.texture.text.js"],
                 ]
             });
 
-            var quadWidth = configs.width || .2;
-            var quadHeight = configs.height || .06;
+            var quadWidth = cfg.width || .2;
+            var quadHeight = cfg.height || .06;
 
             var geometry = texture.addNode({
                 type:"geometry",

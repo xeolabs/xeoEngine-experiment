@@ -32,6 +32,8 @@ define(
             var scene = SceneJS.createScene({
                 id:canvasId,
                 canvasId:canvasId
+            }, {
+                simulateWebGLContextLost:cfg.simulateWebGLContextLost
             });
 
             var startTime = (new Date()).getTime();
@@ -59,7 +61,7 @@ define(
 
             /* Provide scene for child actors            
              */
-            this.setObject("scene", scene);
+            this.setResource("scene", scene);
 
             /**
              * Fires a "scene.pickhit" event for any hit on
@@ -95,8 +97,40 @@ define(
                 }
             };
 
+            /**
+             * Call this to simulate a webglcontextlost event.
+             * SceneJS and xeoEngine should just keep on trucking like nothing happened.
+             * Don't create or update anything while context is regained.
+             *
+             * http://www.khronos.org/webgl/wiki/HandlingContextLost
+             *
+             * @param params
+             */
+            this.loseWebGLContext = function (params) {
+                scene.loseWebGLContext();
+            };
+
+            /* Notify when WebGL context lost
+             */
+            var webGLContextLostHandle = SceneJS.onEvent(
+                "webglcontextlost",
+                function (params) {
+                    self.publish("webglcontextlost", params);
+                });
+
+            /* Notify when SceneJS has restored lost WebGL context
+             */
+            var webGLContextRestoredHandle = SceneJS.onEvent(
+                "webglcontextrestored",
+                function (params) {
+                    self.publish("webglcontextrestored", params);
+                });
 
             this._destroy = function () {
+
+                SceneJS.unEvent(webGLContextLostHandle);
+                SceneJS.unEvent(webGLContextRestoredHandle);
+
                 scene.destroy();
             };
 

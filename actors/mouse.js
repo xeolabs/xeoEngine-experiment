@@ -8,7 +8,7 @@ define(function () {
 
     return function (cfg) {
 
-        var scene = this.getObject("scene");
+        var scene = this.getResource("scene");
 
         var canvas = scene.getCanvas();
 

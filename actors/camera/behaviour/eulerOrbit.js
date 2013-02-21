@@ -8,23 +8,23 @@ define([
 ],
     function () {
 
-        return function (configs) {
+        return function (cfg) {
 
-            var eye = configs.eye || {};
+            var eye = cfg.eye || {};
             eye = {
                 x : eye.x != undefined ? eye.x : 0,
                 y : eye.y != undefined ? eye.y : 0,
                 z : eye.z != undefined ? eye.z : 100
             };
 
-            var look = configs.look || {};
+            var look = cfg.look || {};
             look = {
                 x : look.x != undefined ? look.x : 0,
                 y : look.y != undefined ? look.y : 0,
                 z : look.z != undefined ? look.z : 0
             };
 
-            var up = configs.up || {};
+            var up = cfg.up || {};
             up = {
                 x : up.x != undefined ? up.x : 0,
                 y : up.y != undefined ? up.y : 1,
@@ -162,5 +162,9 @@ define([
                     flight = null;
                 }
             };
+            
+            /* Initialise from configs
+             */
+            this.set(cfg);
         }
     });

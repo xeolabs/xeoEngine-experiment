@@ -17,7 +17,7 @@ define(function () {
         var nx = configs.nx || 1;
         var ny = configs.ny || 1;
 
-        var scene = this.getObject("scene");
+        var scene = this.getResource("scene");
 
         var nodeId = configs.nodeId || "world";
 

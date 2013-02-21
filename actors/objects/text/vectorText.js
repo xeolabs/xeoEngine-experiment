@@ -4,7 +4,7 @@ define(["lib/scenejs/scenejs.vectorText.js"],
 
         return function (cfg) {
 
-            var scene = this.getObject("scene");
+            var scene = this.getResource("scene");
 
             var nodeId = cfg.nodeId || "world";
 

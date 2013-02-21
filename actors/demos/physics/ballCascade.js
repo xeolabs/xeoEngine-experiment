@@ -100,7 +100,7 @@ define([
                                         {
 
                                             type:"geometry",
-                                            asset:{
+                                            source:{
                                                 type:"box"
                                             }
                                         }

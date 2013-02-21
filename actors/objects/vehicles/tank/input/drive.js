@@ -32,16 +32,15 @@
 define(
     function () {
 
-        return function (scope, configs) {
+        return function (cfg) {
 
-            var mouseActorId = configs.mouseActorId || "mouse";
-            var behaviourActorId = configs.actorId + "-orbit";
-            var tankActorId = configs.tankActorId || "tank";
+            var mouseActorId = cfg.mouseActorId || "mouse";
+            var behaviourActorId = cfg.actorId + "-orbit";
+            var tankActorId = cfg.tankActorId || "tank";
 
-            var yawSensitivity = configs.yawSensitivity || 1.0;
-            var gunYawSensitivity = configs.gunYawSensitivity || 1.0;
-            var speedSensitivity = configs.speedSensitivity || 1.0;
-
+            var yawSensitivity = cfg.yawSensitivity || 1.0;
+            var gunYawSensitivity = cfg.gunYawSensitivity || 1.0;
+            var speedSensitivity = cfg.speedSensitivity || 1.0;
 
             scope.call("addActor", {
                 type:"objects/vehicles/tank/behaviour/drive",

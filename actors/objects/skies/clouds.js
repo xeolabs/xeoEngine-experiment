@@ -4,7 +4,7 @@ define(["lib/scenejs/scenejs.skybox.js"],
 
         return function (configs) {
 
-            var scene = this.getObject("scene");
+            var scene = this.getResource("scene");
 
             var nodeId = configs.nodeId || "sky";
 

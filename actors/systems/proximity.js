@@ -94,7 +94,7 @@ define([
 
         return function (configs) {
 
-            var scene = this.getObject("scene");
+            var scene = this.getResource("scene");
 
             var nodeId = configs.nodeId || "lookat";
 
