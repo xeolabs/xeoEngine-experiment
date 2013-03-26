@@ -1,7 +1,7 @@
 xeoEngine
 =========
 
-xeoEngine is a message-driven WebGL engine built on [ActorJS](https://github.com/xeolabs/actorjs) and [SceneJS](http://scenejs.org)
+xeoEngine is an experimental message-driven WebGL engine built on [ActorJS](https://github.com/xeolabs/actorjs) and [SceneJS](http://scenejs.org)
 that lets you create and manage 3D worlds over a network.
 
 At this early stage, xeoEngine is in a state of flux as I explore what kind of functionality I should put in the actors, but over time
