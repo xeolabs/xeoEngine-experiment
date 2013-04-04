@@ -6,8 +6,7 @@ that lets you create and manage 3D worlds over a network.
 
 **No longer in development**
 
-This project is just here for demo purposes. For an actively developed distributed WebGL engine, check out [SceneHub](https://github.com/SceneHub), which provides a JavaScript client API, which after 
-I found to be a more suitable approach for Web development than JSON-RPC.
+This project is just here for demo purposes. For an actively developed distributed WebGL engine, check out [SceneHub](https://github.com/SceneHub), which provides a JavaScript client API, which I found to be a more suitable approach for Web development than JSON-RPC.
 
 ## Concept
 
