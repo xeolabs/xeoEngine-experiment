@@ -4,6 +4,8 @@ xeoEngine
 xeoEngine is an experimental message-driven WebGL engine built on [ActorJS](https://github.com/xeolabs/actorjs) and [SceneJS](http://scenejs.org)
 that lets you create and manage 3D worlds over a network.
 
+**I'm no longer developing this project**. However, it paved the way for [SceneHub](https://github.com/SceneHub), which I am actively developing: 
+
 ## Concept
 
 Via JSON-RPC, xeoEngine lets us plug actors together to create a 3D world, then fire calls at the actors to make the world
