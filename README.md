@@ -5,6 +5,7 @@ xeoEngine is an experimental message-driven WebGL engine built on [ActorJS](http
 that lets you create and manage 3D worlds over a network.
 
 **No longer in development**
+
 This project is just here for demo purposes. For an actively developed distributed WebGL engine, check out [SceneHub](https://github.com/SceneHub), which provides a JavaScript client API, which after lots of experimentation 
 I found to be a more suitable approach for Web development than JSON-RPC.
 
