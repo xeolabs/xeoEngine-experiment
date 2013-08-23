@@ -7,7 +7,7 @@ that lets you create and manage 3D worlds over a network.
 **This project is happily retired**
 
 This project is just here for the record. It served awesomely an experimental platform to see what's possible, and 
-now much of that stuff is going into [SceneJS 3.X](https://github.com/SceneJS).
+now much of that stuff is going into [SceneJS 3.X](https://github.com/xeolabs/scenejs).
 
 ## Concept
 
